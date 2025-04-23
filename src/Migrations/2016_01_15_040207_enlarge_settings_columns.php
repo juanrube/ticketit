@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class EnlargeSettingsColumns extends Migration
+return new class extends Migration
 {
 
     public function up()
@@ -24,4 +24,4 @@ class EnlargeSettingsColumns extends Migration
             $table->string('default')->change();
         });
     }
-}
+};

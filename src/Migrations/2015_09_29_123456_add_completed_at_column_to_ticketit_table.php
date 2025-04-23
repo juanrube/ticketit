@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddCompletedAtColumnToTicketitTable extends Migration
+return new class extends Migration
 {
 
     public function up()
@@ -21,4 +21,4 @@ class AddCompletedAtColumnToTicketitTable extends Migration
             $table->dropColumn('completed_at');
         });
     }
-}
+};

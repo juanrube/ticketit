@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AlterUsersTable extends Migration
+return new class extends Migration
 {
 
     public function up()
@@ -22,4 +22,4 @@ class AlterUsersTable extends Migration
             $table->dropColumn(['ticketit_admin', 'ticketit_agent']);
         });
     }
-}
+};
