@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Juanrube\Ticketit\Seeds;
 
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -154,12 +154,12 @@ class TicketitTableSeeder extends Seeder
                 $ticket->user_id = $user_info->id;
                 $ticket->agent_id = $agent_id;
                 $ticket->category_id = $rand_category;
-                $ticket->created_at = \Carbon\Carbon::now()->subDays($random_create);
-                $ticket->updated_at = \Carbon\Carbon::now()->subDays($random_create);
+                $ticket->created_at = \Illuminate\Support\Carbon::now()->subDays($random_create);
+                $ticket->updated_at = \Illuminate\Support\Carbon::now()->subDays($random_create);
 
                 $completed_at = new Carbon($ticket->created_at);
 
-                if (! $completed_at->addDays($random_complete)->gt(\Carbon\Carbon::now())) {
+                if (! $completed_at->addDays($random_complete)->gt(\Illuminate\Support\Carbon::now())) {
                     $ticket->completed_at = $completed_at;
                     $ticket->updated_at = $completed_at;
                     $ticket->status_id = $this->default_closed_status_id;
