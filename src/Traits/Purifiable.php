@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Traits;
 
 use Juanrube\Ticketit\Models\Setting;

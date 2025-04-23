@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 Route::group(['middleware' => \Juanrube\Ticketit\Helpers\LaravelVersion::authMiddleware()], function () use ($main_route, $main_route_path, $admin_route, $admin_route_path) {
     // Ticket public route
     Route::get("$main_route_path/complete", 'Juanrube\Ticketit\Controllers\TicketsController@indexComplete')

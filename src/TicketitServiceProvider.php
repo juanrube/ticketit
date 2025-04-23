@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit;
 
 use Illuminate\Support\Facades\Request;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'initial-setup' => 'Configuração Inicial dos Chamados',
     'master-template-file' => 'Arquivo de Modelo Principal',
