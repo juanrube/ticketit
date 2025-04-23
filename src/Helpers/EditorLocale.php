@@ -2,8 +2,8 @@
 
 namespace Juanrube\Ticketit\Helpers;
 
-use Juanrube\Ticketit\Models\Setting;
 use Illuminate\Support\Arr;
+use Juanrube\Ticketit\Models\Setting;
 
 class EditorLocale
 {

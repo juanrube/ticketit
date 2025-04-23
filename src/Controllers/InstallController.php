@@ -32,7 +32,7 @@ class InstallController extends Controller
         if ($public !== $assets) {
             Artisan::call('vendor:publish', [
                 '--provider' => 'Kordy\\Ticketit\\TicketitServiceProvider',
-                '--tag'      => ['public'],
+                '--tag' => ['public'],
             ]);
         }
     }
@@ -50,7 +50,7 @@ class InstallController extends Controller
         ) {
             $views_files_list = $this->viewsFilesList(resource_path('views')) + ['another' => trans('ticketit::install.another-file')];
             $inactive_migrations = $this->inactiveMigrations();
-            
+
             $users_list = User::pluck('name', 'id')->toArray();
 
             return view('ticketit::install.index', compact('views_files_list', 'inactive_migrations', 'users_list'));
@@ -115,7 +115,7 @@ class InstallController extends Controller
         if ($inactive_migrations) { // If a migration is missing, do the migrate
             Artisan::call('vendor:publish', [
                 '--provider' => 'Kordy\\Ticketit\\TicketitServiceProvider',
-                '--tag'      => ['db'],
+                '--tag' => ['db'],
             ]);
             Artisan::call('migrate');
 
@@ -123,7 +123,7 @@ class InstallController extends Controller
 
             // if this is the first install of the html editor, seed old posts text to the new html column
             if (in_array('2016_01_15_002617_add_htmlcontent_to_ticketit_and_comments', $inactive_migrations) &&
-                !(isset($_SERVER['ARTISAN_TICKETIT_INSTALLING']) && $_SERVER['ARTISAN_TICKETIT_INSTALLING'])) {
+                ! (isset($_SERVER['ARTISAN_TICKETIT_INSTALLING']) && $_SERVER['ARTISAN_TICKETIT_INSTALLING'])) {
                 Artisan::call('ticketit:htmlify');
             }
         } elseif ($this->inactiveSettings()) { // new settings to be installed
@@ -136,7 +136,7 @@ class InstallController extends Controller
     /**
      * Run the settings table seeder.
      *
-     * @param string $master
+     * @param  string  $master
      */
     public function settingsSeeder($master = false)
     {
@@ -153,7 +153,7 @@ class InstallController extends Controller
             $config_settings = include $settings_file_path;
             File::move($settings_file_path, $settings_file_path.'.backup');
         }
-        $seeder = new SettingsTableSeeder();
+        $seeder = new SettingsTableSeeder;
         if ($master) {
             $config_settings['master_template'] = $master;
         }
@@ -220,7 +220,7 @@ class InstallController extends Controller
         }
 
         foreach ($tables as $table) {
-            if (!in_array($table, $migration_arr)) {
+            if (! in_array($table, $migration_arr)) {
                 $inactiveMigrations[] = $table;
             }
         }
@@ -235,12 +235,12 @@ class InstallController extends Controller
      */
     public function inactiveSettings()
     {
-        $seeder = new SettingsTableSeeder();
+        $seeder = new SettingsTableSeeder;
 
         // Package Settings
         $installed_settings = DB::table('ticketit_settings')->pluck('value', 'slug');
 
-        if (!is_array($installed_settings)) {
+        if (! is_array($installed_settings)) {
             $installed_settings = $installed_settings->toArray();
         }
 
@@ -263,10 +263,10 @@ class InstallController extends Controller
      */
     public function demoDataSeeder()
     {
-        $seeder = new TicketitTableSeeder();
+        $seeder = new TicketitTableSeeder;
         $seeder->run();
         session()->flash('status', 'Demo tickets, users, and agents are seeded!');
 
-        return redirect()->route(Setting::grab('main_route') . '.index');
+        return redirect()->route(Setting::grab('main_route').'.index');
     }
 }

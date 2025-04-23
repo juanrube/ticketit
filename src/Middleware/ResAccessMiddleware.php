@@ -12,9 +12,7 @@ class ResAccessMiddleware
     /**
      * Run the request filter.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -54,7 +52,7 @@ class ResAccessMiddleware
             return $next($request);
         }
 
-        return redirect()->route(Setting::grab('main_route') . '.index')
+        return redirect()->route(Setting::grab('main_route').'.index')
             ->with('warning', trans('ticketit::lang.you-are-not-permitted-to-access'));
     }
 }

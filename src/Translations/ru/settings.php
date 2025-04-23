@@ -11,29 +11,29 @@ $summernoteVersion = Juanrube\Ticketit\Helpers\Cdn::Summernote;
 
 return [
 
-    'main_route'               => '<p><b>Ticketit основной route</b>: Базовый URL тикет-системы (например <code>http://&laquo;APP_URL&raquo;/tickets</code>)</p>',
-    'admin_route'              => '<p><b>Ticketit административный route</b>: URL по которому будет находиться административная панель (например <code>http://&laquo;APP_URL&raquo;/tickets-admin</code>)</p>',
-    'master_template'          => '<p><b>Базовые шаблоны</b>: Базовый шаблон (layout) веб-интерфейса</p>',
-    'email.template'           => '<p><b>Базовый шаблоны</b>: Базовый шаблон (layout) для email</p>',
-    'email.header'             => '<p><img src="http://i.imgur.com/5aJjuZL.jpg"/></p>',
-    'email.signoff'            => '<p><img src="http://i.imgur.com/jONMwgF.jpg"/></p>',
-    'email.signature'          => '<p><img src="http://i.imgur.com/coi3R63.jpg"/></p>',
-    'email.dashboard'          => '<p><img src="http://i.imgur.com/qzNzJD4.jpg"/></p>',
-    'email.google_plus_link'   => '<p><b>Ссылки на социальные сети</b>: пусто, либо строка</p><p><img src="http://i.imgur.com/fzyxfSg.jpg"/></p>',
-    'email.facebook_link'      => '<p><b>Ссылки на социальные сети</b>: пусто, либо строка</p><p><img src="http://i.imgur.com/FQQzr98.jpg"/></p>',
-    'email.twitter_link'       => '<p><b>Ссылки на социальные сети</b>: пусто, либо строка</p><p><img src="http://i.imgur.com/5JmkrF1.jpg"/></p>',
-    'email.footer'             => '',
-    'email.footer_link'        => '',
-    'email.color_body_bg'      => '<p><img src="http://i.imgur.com/KTF7rEJ.jpg"/></p>',
-    'email.color_header_bg'    => '<p><img src="http://i.imgur.com/wenw5H5.jpg"/></p>',
-    'email.color_content_bg'   => '<p><img src="http://i.imgur.com/7r8dAFj.jpg"/></p>',
-    'email.color_footer_bg'    => '<p><img src="http://i.imgur.com/KTjkdSN.jpg"/></p>',
-    'email.color_button_bg'    => '<p><img src="http://i.imgur.com/0TbGIyt.jpg"/></p>',
-    'default_status_id'        => '<p>Статус, назначаемый созданному тикету</p>',
-    'default_close_status_id'  => '<p>Статус назначаемый тикету при закрытии</p>',
+    'main_route' => '<p><b>Ticketit основной route</b>: Базовый URL тикет-системы (например <code>http://&laquo;APP_URL&raquo;/tickets</code>)</p>',
+    'admin_route' => '<p><b>Ticketit административный route</b>: URL по которому будет находиться административная панель (например <code>http://&laquo;APP_URL&raquo;/tickets-admin</code>)</p>',
+    'master_template' => '<p><b>Базовые шаблоны</b>: Базовый шаблон (layout) веб-интерфейса</p>',
+    'email.template' => '<p><b>Базовый шаблоны</b>: Базовый шаблон (layout) для email</p>',
+    'email.header' => '<p><img src="http://i.imgur.com/5aJjuZL.jpg"/></p>',
+    'email.signoff' => '<p><img src="http://i.imgur.com/jONMwgF.jpg"/></p>',
+    'email.signature' => '<p><img src="http://i.imgur.com/coi3R63.jpg"/></p>',
+    'email.dashboard' => '<p><img src="http://i.imgur.com/qzNzJD4.jpg"/></p>',
+    'email.google_plus_link' => '<p><b>Ссылки на социальные сети</b>: пусто, либо строка</p><p><img src="http://i.imgur.com/fzyxfSg.jpg"/></p>',
+    'email.facebook_link' => '<p><b>Ссылки на социальные сети</b>: пусто, либо строка</p><p><img src="http://i.imgur.com/FQQzr98.jpg"/></p>',
+    'email.twitter_link' => '<p><b>Ссылки на социальные сети</b>: пусто, либо строка</p><p><img src="http://i.imgur.com/5JmkrF1.jpg"/></p>',
+    'email.footer' => '',
+    'email.footer_link' => '',
+    'email.color_body_bg' => '<p><img src="http://i.imgur.com/KTF7rEJ.jpg"/></p>',
+    'email.color_header_bg' => '<p><img src="http://i.imgur.com/wenw5H5.jpg"/></p>',
+    'email.color_content_bg' => '<p><img src="http://i.imgur.com/7r8dAFj.jpg"/></p>',
+    'email.color_footer_bg' => '<p><img src="http://i.imgur.com/KTjkdSN.jpg"/></p>',
+    'email.color_button_bg' => '<p><img src="http://i.imgur.com/0TbGIyt.jpg"/></p>',
+    'default_status_id' => '<p>Статус, назначаемый созданному тикету</p>',
+    'default_close_status_id' => '<p>Статус назначаемый тикету при закрытии</p>',
     'default_reopen_status_id' => '<p>Статус, назначаемый тикету при повторной активации</p>',
-    'paginate_items'           => '<p><b>Число элементов на странице</b>: Обычная .</p>',
-    'length_menu'              => '<p><b>Число элементов на странице</b>: Таблица тикетов</p>',
+    'paginate_items' => '<p><b>Число элементов на странице</b>: Обычная .</p>',
+    'length_menu' => '<p><b>Число элементов на странице</b>: Таблица тикетов</p>',
 
     'status_notification' => <<<'HTML'
 			<p>
@@ -91,8 +91,8 @@ HTML
 HTML
     ,
 
-    'close_ticket_perm'        => '<p><b>Право закрытия тикета</b>: Кто может закрывать тикеты</p>',
-    'reopen_ticket_perm'       => '<p><b>Право возобновления тикета</b>: Кто может возобновлять тикеты</p>',
+    'close_ticket_perm' => '<p><b>Право закрытия тикета</b>: Кто может закрывать тикеты</p>',
+    'reopen_ticket_perm' => '<p><b>Право возобновления тикета</b>: Кто может возобновлять тикеты</p>',
 
     'delete_modal_type' => <<<'HTML'
 			<p><b>Уведомление при удалении</b>: Выберите тип подтверждения при удалении тикета</p>

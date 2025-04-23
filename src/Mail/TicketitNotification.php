@@ -11,8 +11,11 @@ class TicketitNotification extends Mailable
     use Queueable, SerializesModels;
 
     private $template;
+
     private $data;
+
     private $notification_owner;
+
     public $subject;
 
     /**

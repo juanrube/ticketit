@@ -37,18 +37,17 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'ticket_id'   => 'required|exists:ticketit,id',
-            'content'     => 'required|min:6',
+            'ticket_id' => 'required|exists:ticketit,id',
+            'content' => 'required|min:6',
         ]);
 
-        $comment = new Models\Comment();
+        $comment = new Models\Comment;
 
         $comment->setPurifiedContent($request->get('content'));
 
@@ -66,8 +65,7 @@ class CommentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function show($id)
@@ -78,8 +76,7 @@ class CommentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function edit($id)
@@ -90,9 +87,7 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int     $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function update(Request $request, $id)
@@ -103,8 +98,7 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function destroy($id)

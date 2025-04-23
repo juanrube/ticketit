@@ -2,10 +2,10 @@
 
 namespace Juanrube\Ticketit\Models;
 
-use Illuminate\Support\Carbon;
-use Juanrube\Ticketit\Traits\Purifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Juanrube\Ticketit\Traits\ContentEllipse;
+use Juanrube\Ticketit\Traits\Purifiable;
 
 class Ticket extends Model
 {
@@ -13,6 +13,7 @@ class Ticket extends Model
     use Purifiable;
 
     protected $table = 'ticketit';
+
     protected $dates = ['completed_at'];
 
     /**
@@ -127,7 +128,7 @@ class Ticket extends Model
             return Carbon::createFromTimestamp($value); // Usamos Carbon
         } elseif (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value)) {
             return Carbon::createFromFormat('Y-m-d', $value)->startOfDay(); // Usamos Carbon
-        } elseif (!$value instanceof \DateTimeInterface) {
+        } elseif (! $value instanceof \DateTimeInterface) {
             $format = $this->getDateFormat();
 
             return Carbon::createFromFormat($format, $value); // Usamos Carbon
@@ -139,8 +140,6 @@ class Ticket extends Model
     /**
      * Get all user tickets.
      *
-     * @param $query
-     * @param $id
      *
      * @return mixed
      */
@@ -152,8 +151,6 @@ class Ticket extends Model
     /**
      * Get all agent tickets.
      *
-     * @param $query
-     * @param $id
      *
      * @return mixed
      */
@@ -165,8 +162,6 @@ class Ticket extends Model
     /**
      * Get all agent tickets.
      *
-     * @param $query
-     * @param $id
      *
      * @return mixed
      */

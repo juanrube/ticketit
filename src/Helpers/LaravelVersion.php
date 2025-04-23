@@ -21,9 +21,8 @@ class LaravelVersion
     /**
      * Compare laravel version against a version number using a custom operator.
      *
-     * @param string $operator One of these: <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
-     * @param string $version
-     *
+     * @param  string  $operator  One of these: <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
+     * @param  string  $version
      * @return bool
      */
     public static function compare($operator, $version)
@@ -34,8 +33,7 @@ class LaravelVersion
     /**
      * Checks if the current install is older than the given version number.
      *
-     * @param string $version
-     *
+     * @param  string  $version
      * @return bool
      */
     public static function lt($version)
@@ -46,8 +44,7 @@ class LaravelVersion
     /**
      * Checks if the current install is newer than the given version number.
      *
-     * @param string $version
-     *
+     * @param  string  $version
      * @return bool
      */
     public static function gt($version)
@@ -58,8 +55,7 @@ class LaravelVersion
     /**
      * Checks if the current install is minimum as new as required.
      *
-     * @param string $version
-     *
+     * @param  string  $version
      * @return bool
      */
     public static function min($version)
@@ -70,8 +66,7 @@ class LaravelVersion
     /**
      * Checks if the current install is maximum as new as required.
      *
-     * @param string $version
-     *
+     * @param  string  $version
      * @return bool
      */
     public static function max($version)
