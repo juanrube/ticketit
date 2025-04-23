@@ -18,11 +18,6 @@ class TicketitNotification extends Mailable
 
     public $subject;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct($template, $data, $notification_owner, $subject)
     {
         $this->template = $template;
@@ -31,11 +26,6 @@ class TicketitNotification extends Mailable
         $this->subject = $subject;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         return $this->subject($this->subject)

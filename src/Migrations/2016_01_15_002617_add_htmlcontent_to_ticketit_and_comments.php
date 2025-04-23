@@ -5,11 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 class AddHtmlcontentToTicketitAndComments extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::table('ticketit', function (Blueprint $table) {
@@ -22,11 +18,6 @@ class AddHtmlcontentToTicketitAndComments extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('ticketit', function (Blueprint $table) {

@@ -17,12 +17,6 @@ class Cdn
 
     const DataTablesResponsive = '2.2.2';
 
-    /**
-     * Get the URL for a given asset using Vite.
-     *
-     * @param  string  $asset
-     * @return string
-     */
     public static function asset($asset)
     {
         return vite($asset, true);

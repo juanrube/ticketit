@@ -7,9 +7,7 @@ use Juanrube\Ticketit\Models\Setting;
 
 class EditorLocale
 {
-    /**
-     * @return string|null
-     */
+
     public static function getEditorLocale()
     {
         $editor_locale = Setting::grab('summernote_locale');

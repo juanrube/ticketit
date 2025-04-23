@@ -17,11 +17,7 @@ use Spatie\Html\Facades\Html; // Reemplazamos Collective por Spatie
 
 class TicketitServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
+
     public function boot()
     {
         if (! Schema::hasTable('migrations')) {
@@ -147,11 +143,6 @@ class TicketitServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
     public function register()
     {
         /*

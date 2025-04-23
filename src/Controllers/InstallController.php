@@ -133,11 +133,6 @@ class InstallController extends Controller
         \Cache::forget('ticketit::settings');
     }
 
-    /**
-     * Run the settings table seeder.
-     *
-     * @param  string  $master
-     */
     public function settingsSeeder($master = false)
     {
         $cli_path = 'config/ticketit.php'; // if seeder run from cli, use the cli path
@@ -161,11 +156,6 @@ class InstallController extends Controller
         $seeder->run();
     }
 
-    /**
-     * Get list of all files in the views folder.
-     *
-     * @return mixed
-     */
     public function viewsFilesList($dir_path)
     {
         $dir_files = File::files($dir_path);
@@ -179,11 +169,6 @@ class InstallController extends Controller
         return $files;
     }
 
-    /**
-     * Get list of all files in the views folder.
-     *
-     * @return mixed
-     */
     public function allFilesList($dir_path)
     {
         $files = [];
@@ -199,11 +184,6 @@ class InstallController extends Controller
         return $files;
     }
 
-    /**
-     * Get all Ticketit Package migrations that were not migrated.
-     *
-     * @return array
-     */
     public function inactiveMigrations()
     {
         $inactiveMigrations = [];
@@ -228,11 +208,6 @@ class InstallController extends Controller
         return $inactiveMigrations;
     }
 
-    /**
-     * Check if all Ticketit Package settings that were not installed to setting table.
-     *
-     * @return bool
-     */
     public function inactiveSettings()
     {
         $seeder = new SettingsTableSeeder;
@@ -256,11 +231,6 @@ class InstallController extends Controller
         return $inactive_settings;
     }
 
-    /**
-     * Generate demo users, agents, and tickets.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function demoDataSeeder()
     {
         $seeder = new TicketitTableSeeder;

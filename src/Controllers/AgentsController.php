@@ -63,12 +63,6 @@ class AgentsController extends Controller
         return redirect()->action('\Juanrube\Ticketit\Controllers\AgentsController@index');
     }
 
-    /**
-     * Assign users as agents.
-     *
-     *
-     * @return array
-     */
     public function addAgents($user_ids)
     {
         $users = Agent::find($user_ids);
@@ -81,12 +75,6 @@ class AgentsController extends Controller
         return $users_list;
     }
 
-    /**
-     * Remove user from the agents.
-     *
-     *
-     * @return mixed
-     */
     public function removeAgent($id)
     {
         $agent = Agent::find($id);
@@ -105,9 +93,6 @@ class AgentsController extends Controller
         return $agent;
     }
 
-    /**
-     * Sync Agent categories with the selected categories got from update form.
-     */
     public function syncAgentCategories($id, Request $request)
     {
         $form_cats = ($request->input('agent_cats') == null) ? [] : $request->input('agent_cats');

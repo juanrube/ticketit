@@ -8,18 +8,7 @@ use Illuminate\Support\Str;
 
 class ToolsController extends Controller
 {
-    /**
-     * Sorting array of associative arrays - multiple row sorting using a closure.
-     * See also: http://the-art-of-web.com/php/sortarray/.
-     *
-     * @param  array  $data  input-array
-     * @param  string  $type
-     * @return array
-     *
-     * @internal param array|string $fields array-keys
-     *
-     * @license Public Domain
-     */
+
     public function sortArray($data, $field, $type = 'desc')
     {
         uasort($data, function ($a, $b) use ($field, $type) {
@@ -37,12 +26,6 @@ class ToolsController extends Controller
         return $data;
     }
 
-    /**
-     * Determine if the current request URL and query string matches a pattern.
-     *
-     * @param  mixed  string
-     * @return bool
-     */
     public function fullUrlIs($match)
     {
         $url = Request::fullUrl();

@@ -5,11 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateSettingsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('ticketit_settings', function (Blueprint $table) {
@@ -22,11 +18,6 @@ class CreateSettingsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::drop('ticketit_settings');

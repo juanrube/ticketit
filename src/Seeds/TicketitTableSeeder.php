@@ -57,11 +57,6 @@ class TicketitTableSeeder extends Seeder
         'Critical' => '#e10000',
     ];
 
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         Model::unguard();

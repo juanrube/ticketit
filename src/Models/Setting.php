@@ -9,35 +9,16 @@ use Juanrube\Ticketit\Models\Setting as Table;
 
 class Setting extends Model
 {
-    /**
-     * @var array
-     */
+
     protected $fillable = ['lang', 'slug', 'value', 'default'];
 
-    /**
-     * @var string
-     */
     protected $table = 'ticketit_settings';
 
-    /**
-     * Returns one of three columns by slug.
-     * Priority: lang, value, default.
-     *
-     *
-     * @return mixed
-     */
     public function scopeBySlug($query, $slug)
     {
         return $query->whereSlug($slug);
     }
 
-    /**
-     * Grab a setting from cached Settings table by slug.
-     * Cache lifetime: 60 minutes.
-     *
-     *
-     * @return mixed
-     */
     public static function grab($slug)
     {
         /*
@@ -73,13 +54,6 @@ class Setting extends Model
         return $setting;
     }
 
-    /**
-     * Check if a parameter under Value or Default columns
-     * is serialized.
-     *
-     *
-     * @return bool
-     */
     public static function is_serialized($data, $strict = true)
     {
         // if it isn't a string, it isn't serialized.

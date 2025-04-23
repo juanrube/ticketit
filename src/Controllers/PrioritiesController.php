@@ -10,11 +10,7 @@ use Juanrube\Ticketit\Models\Priority;
 
 class PrioritiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+
     public function index()
     {
         // seconds expected for L5.8<=, minutes before that
@@ -26,22 +22,11 @@ class PrioritiesController extends Controller
         return view('ticketit::admin.priority.index', compact('priorities'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create()
     {
         return view('ticketit::admin.priority.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -59,23 +44,11 @@ class PrioritiesController extends Controller
         return redirect()->action('\Juanrube\Ticketit\Controllers\PrioritiesController@index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function show($id)
     {
         return trans('ticketit::lang.priority-all-tickets-here');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function edit($id)
     {
         $priority = Priority::findOrFail($id);
@@ -83,12 +56,6 @@ class PrioritiesController extends Controller
         return view('ticketit::admin.priority.edit', compact('priority'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -106,12 +73,6 @@ class PrioritiesController extends Controller
         return redirect()->action('\Juanrube\Ticketit\Controllers\PrioritiesController@index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
         $priority = Priority::findOrFail($id);

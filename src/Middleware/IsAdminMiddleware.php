@@ -8,12 +8,7 @@ use Juanrube\Ticketit\Models\Setting;
 
 class IsAdminMiddleware
 {
-    /**
-     * Run the request filter.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
+
     public function handle($request, Closure $next)
     {
         if (Agent::isAdmin()) {

@@ -9,9 +9,6 @@ class SettingsTableSeeder extends Seeder
 {
     public $config = [];
 
-    /**
-     * Seed the Plans table.
-     */
     public function run()
     {
         $defaults = [];
@@ -36,12 +33,6 @@ class SettingsTableSeeder extends Seeder
         }
     }
 
-    /**
-     * Takes config/ticketit.php, merge with package defaults, and returns serialized array.
-     *
-     *
-     * @return array
-     */
     public function cleanupAndMerge($defaults, $config)
     {
         $merged = array_merge($defaults, $config);

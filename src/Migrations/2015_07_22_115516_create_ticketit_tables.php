@@ -5,11 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateTicketitTables extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('ticketit_statuses', function (Blueprint $table) {
@@ -64,11 +60,6 @@ class CreateTicketitTables extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::drop('ticketit_audits');

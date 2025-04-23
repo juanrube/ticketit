@@ -25,11 +25,6 @@ class Configuration extends Model
         $this->attributes['lang'] = trim($lang) !== '' ? $lang : null;
     }
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'id' => 'integer',
         'lang' => 'string',
