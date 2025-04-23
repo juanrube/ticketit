@@ -125,7 +125,7 @@ class Setting extends Model
                     if (substr($data, -2, 1) !== '"') {
                         return false;
                     }
-                } elseif (strpos($data, '"') === false) {
+                } elseif (!str_contains($data, '"')) {
                     return false;
                 }
                 // or else fall through
