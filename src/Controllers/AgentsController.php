@@ -5,9 +5,9 @@ namespace Juanrube\Ticketit\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Juanrube\Ticketit\Helpers\LaravelVersion;
 use Juanrube\Ticketit\Models\Agent;
 use Juanrube\Ticketit\Models\Setting;
-use Juanrube\Ticketit\Helpers\LaravelVersion;
 
 class AgentsController extends Controller
 {
@@ -27,15 +27,15 @@ class AgentsController extends Controller
 
     public function store(Request $request)
     {
-    	$rules = [
+        $rules = [
             'agents' => 'required|array|min:1',
         ];
 
-        if(LaravelVersion::min('5.2')){
-        	$rules['agents.*'] = 'integer|exists:users,id';
+        if (LaravelVersion::min('5.2')) {
+            $rules['agents.*'] = 'integer|exists:users,id';
         }
 
-    	$this->validate($request, $rules);
+        $this->validate($request, $rules);
 
         $agents_list = $this->addAgents($request->input('agents'));
         $agents_names = implode(',', $agents_list);
@@ -66,7 +66,6 @@ class AgentsController extends Controller
     /**
      * Assign users as agents.
      *
-     * @param $user_ids
      *
      * @return array
      */
@@ -85,7 +84,6 @@ class AgentsController extends Controller
     /**
      * Remove user from the agents.
      *
-     * @param $id
      *
      * @return mixed
      */
@@ -109,9 +107,6 @@ class AgentsController extends Controller
 
     /**
      * Sync Agent categories with the selected categories got from update form.
-     *
-     * @param $id
-     * @param Request $request
      */
     public function syncAgentCategories($id, Request $request)
     {

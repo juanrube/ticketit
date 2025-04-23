@@ -37,7 +37,7 @@ class Htmlify extends Command
         $tickets = Ticket::all();
 
         foreach ($tickets as $ticket) {
-            if (!$ticket->html) {
+            if (! $ticket->html) {
                 $ticket->html = nl2br(e($ticket->content));
                 $ticket->content = e($ticket->content);
                 $ticket->save();
@@ -47,7 +47,7 @@ class Htmlify extends Command
         $comments = Comment::all();
 
         foreach ($comments as $comment) {
-            if (!$comment->html) {
+            if (! $comment->html) {
                 $comment->html = nl2br(e($comment->content));
                 $comment->content = e($comment->content);
                 $comment->save();

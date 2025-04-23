@@ -5,8 +5,8 @@ namespace Juanrube\Ticketit\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Juanrube\Ticketit\Models\Status;
 use Juanrube\Ticketit\Helpers\LaravelVersion;
+use Juanrube\Ticketit\Models\Status;
 
 class StatusesController extends Controller
 {
@@ -18,7 +18,7 @@ class StatusesController extends Controller
     public function index()
     {
         // seconds expected for L5.8<=, minutes before that
-        $time = LaravelVersion::min('5.8') ? 60*60 : 60;
+        $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
         $statuses = \Cache::remember('ticketit::statuses', $time, function () {
             return Status::all();
         });
@@ -39,18 +39,17 @@ class StatusesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'      => 'required',
-            'color'     => 'required',
+            'name' => 'required',
+            'color' => 'required',
         ]);
 
-        $status = new Status();
+        $status = new Status;
         $status->create(['name' => $request->name, 'color' => $request->color]);
 
         Session::flash('status', trans('ticketit::lang.status-name-has-been-created', ['name' => $request->name]));
@@ -63,8 +62,7 @@ class StatusesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function show($id)
@@ -75,8 +73,7 @@ class StatusesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function edit($id)
@@ -89,16 +86,14 @@ class StatusesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int     $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'      => 'required',
-            'color'     => 'required',
+            'name' => 'required',
+            'color' => 'required',
         ]);
 
         $status = Status::findOrFail($id);
@@ -114,8 +109,7 @@ class StatusesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function destroy($id)

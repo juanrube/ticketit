@@ -2,20 +2,21 @@
 
 namespace Juanrube\Ticketit\Controllers;
 
+use App\Http\Controllers\Controller;
 use Cache;
 use Carbon\Carbon;
-use Juanrube\Ticketit\Models;
 use Illuminate\Http\Request;
-use Juanrube\Ticketit\Models\Agent;
-use Juanrube\Ticketit\Models\Ticket;
-use Juanrube\Ticketit\Models\Setting;
-use Juanrube\Ticketit\Models\Category;
-use App\Http\Controllers\Controller;
 use Juanrube\Ticketit\Helpers\LaravelVersion;
+use Juanrube\Ticketit\Models;
+use Juanrube\Ticketit\Models\Agent;
+use Juanrube\Ticketit\Models\Category;
+use Juanrube\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Models\Ticket;
 
 class TicketsController extends Controller
 {
     protected $tickets;
+
     protected $agent;
 
     public function __construct(Ticket $tickets, Agent $agent)
@@ -162,7 +163,7 @@ class TicketsController extends Controller
     protected function PCS()
     {
         // seconds expected for L5.8<=, minutes before that
-        $time = LaravelVersion::min('5.8') ? 60*60 : 60;
+        $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
 
         $priorities = Cache::remember('ticketit::priorities', $time, function () {
             return Models\Priority::all();
@@ -190,7 +191,7 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        list($priorities, $categories) = $this->PCS();
+        [$priorities, $categories] = $this->PCS();
 
         return view('ticketit::tickets.create', compact('priorities', 'categories'));
     }
@@ -198,20 +199,19 @@ class TicketsController extends Controller
     /**
      * Store a newly created ticket and auto assign an agent for it.
      *
-     * @param Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'subject'     => 'required|min:3',
-            'content'     => 'required|min:6',
+            'subject' => 'required|min:3',
+            'content' => 'required|min:6',
             'priority_id' => 'required|exists:ticketit_priorities,id',
             'category_id' => 'required|exists:ticketit_categories,id',
         ]);
 
-        $ticket = new Ticket();
+        $ticket = new Ticket;
 
         $ticket->subject = $request->subject;
 
@@ -228,21 +228,20 @@ class TicketsController extends Controller
 
         session()->flash('status', trans('ticketit::lang.the-ticket-has-been-created'));
 
-        return redirect()->route(Setting::grab('main_route') . '.index');
+        return redirect()->route(Setting::grab('main_route').'.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function show($id)
     {
         $ticket = $this->tickets->findOrFail($id);
 
-        list($priority_lists, $category_lists, $status_lists) = $this->PCS();
+        [$priority_lists, $category_lists, $status_lists] = $this->PCS();
 
         $close_perm = $this->permToClose($id);
         $reopen_perm = $this->permToReopen($id);
@@ -264,20 +263,18 @@ class TicketsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int     $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'subject'     => 'required|min:3',
-            'content'     => 'required|min:6',
+            'subject' => 'required|min:3',
+            'content' => 'required|min:6',
             'priority_id' => 'required|exists:ticketit_priorities,id',
             'category_id' => 'required|exists:ticketit_categories,id',
-            'status_id'   => 'required|exists:ticketit_statuses,id',
-            'agent_id'    => 'required',
+            'status_id' => 'required|exists:ticketit_statuses,id',
+            'agent_id' => 'required',
         ]);
 
         $ticket = $this->tickets->findOrFail($id);
@@ -306,8 +303,7 @@ class TicketsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function destroy($id)
@@ -324,8 +320,7 @@ class TicketsController extends Controller
     /**
      * Mark ticket as complete.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function complete($id)
@@ -353,8 +348,7 @@ class TicketsController extends Controller
     /**
      * Reopen ticket from complete status.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function reopen($id)
@@ -400,8 +394,6 @@ class TicketsController extends Controller
     }
 
     /**
-     * @param $id
-     *
      * @return bool
      */
     public function permToClose($id)
@@ -422,8 +414,6 @@ class TicketsController extends Controller
     }
 
     /**
-     * @param $id
-     *
      * @return bool
      */
     public function permToReopen($id)
@@ -443,8 +433,7 @@ class TicketsController extends Controller
     /**
      * Calculate average closing period of days per category for number of months.
      *
-     * @param int $period
-     *
+     * @param  int  $period
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function monthlyPerfomance($period = 2)
@@ -474,8 +463,7 @@ class TicketsController extends Controller
     /**
      * Calculate the date length it took to solve a ticket.
      *
-     * @param Ticket $ticket
-     *
+     * @param  Ticket  $ticket
      * @return int|false
      */
     public function ticketPerformance($ticket)
@@ -494,8 +482,6 @@ class TicketsController extends Controller
     /**
      * Calculate the average date length it took to solve tickets within date period.
      *
-     * @param $from
-     * @param $to
      *
      * @return int
      */

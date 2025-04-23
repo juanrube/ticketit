@@ -12,9 +12,7 @@ class Agent extends User
     /**
      * list of all agents and returning collection.
      *
-     * @param $query
-     * @param bool $paginate
-     *
+     * @param  bool  $paginate
      * @return bool
      *
      * @internal param int $cat_id
@@ -31,9 +29,7 @@ class Agent extends User
     /**
      * list of all admins and returning collection.
      *
-     * @param $query
-     * @param bool $paginate
-     *
+     * @param  bool  $paginate
      * @return bool
      *
      * @internal param int $cat_id
@@ -50,9 +46,7 @@ class Agent extends User
     /**
      * list of all agents and returning collection.
      *
-     * @param $query
-     * @param bool $paginate
-     *
+     * @param  bool  $paginate
      * @return bool
      *
      * @internal param int $cat_id
@@ -69,7 +63,6 @@ class Agent extends User
     /**
      * list of all agents and returning lists array of id and name.
      *
-     * @param $query
      *
      * @return bool
      *
@@ -121,27 +114,26 @@ class Agent extends User
     /**
      * Check if user is the assigned agent for a ticket.
      *
-     * @param int $id ticket id
-     *
+     * @param  int  $id  ticket id
      * @return bool
      */
     public static function isAssignedAgent($id)
     {
         return auth()->check() &&
-        	Auth::user()->ticketit_agent &&
+            Auth::user()->ticketit_agent &&
             Auth::user()->id == Ticket::find($id)->agent->id;
     }
 
     /**
      * Check if user is the owner for a ticket.
      *
-     * @param int $id ticket id
-     *
+     * @param  int  $id  ticket id
      * @return bool
      */
     public static function isTicketOwner($id)
     {
-    	$ticket = Ticket::find($id);
+        $ticket = Ticket::find($id);
+
         return $ticket && auth()->check() &&
             auth()->user()->id == $ticket->user->id;
     }

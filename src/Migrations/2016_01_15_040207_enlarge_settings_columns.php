@@ -12,7 +12,7 @@ class EnlargeSettingsColumns extends Migration
      */
     public function up()
     {
-        //make value, default columns bigger
+        // make value, default columns bigger
         Schema::table('ticketit_settings', function (Blueprint $table) {
             $table->mediumText('value')->change();
             $table->mediumText('default')->change();

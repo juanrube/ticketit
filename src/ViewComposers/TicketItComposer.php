@@ -18,7 +18,7 @@ class TicketItComposer
                 }
                 $view->with('u', $u);
             }
-            $setting = new Setting();
+            $setting = new Setting;
             $view->with('setting', $setting);
         });
     }
@@ -27,7 +27,7 @@ class TicketItComposer
     {
         // Passing to views the master view value from the setting file
         view()->composer('ticketit::*', function ($view) {
-            $tools = new ToolsController();
+            $tools = new ToolsController;
             $master = Setting::grab('master_template');
             $email = Setting::grab('email.template');
             $view->with(compact('master', 'email', 'tools'));
@@ -58,7 +58,7 @@ class TicketItComposer
 
     public static function sharedAssets()
     {
-        //inlude font awesome css or not
+        // inlude font awesome css or not
         view()->composer('ticketit::shared.assets', function ($view) {
             $include_font_awesome = Setting::grab('include_font_awesome');
             $view->with(compact('include_font_awesome'));

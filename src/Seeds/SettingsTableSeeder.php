@@ -3,7 +3,6 @@
 namespace Juanrube\Ticketit\Seeds;
 
 use Illuminate\Database\Seeder;
-use Juanrube\Ticketit\Helpers\LaravelVersion;
 use Juanrube\Ticketit\Models\Setting;
 
 class SettingsTableSeeder extends Seeder
@@ -28,9 +27,9 @@ class SettingsTableSeeder extends Seeder
                 ]);
             } else {
                 Setting::create([
-                    'lang'    => null,
-                    'slug'    => $slug,
-                    'value'   => $column,
+                    'lang' => null,
+                    'slug' => $slug,
+                    'value' => $column,
                     'default' => $column,
                 ]);
             }
@@ -40,8 +39,6 @@ class SettingsTableSeeder extends Seeder
     /**
      * Takes config/ticketit.php, merge with package defaults, and returns serialized array.
      *
-     * @param $defaults
-     * @param $config
      *
      * @return array
      */
@@ -84,13 +81,13 @@ class SettingsTableSeeder extends Seeder
              * Ticketit main route: Where to load the ticket system (ex. http://url/tickets)
              * Default: /ticket
              */
-            'main_route'      => 'tickets',
+            'main_route' => 'tickets',
             'main_route_path' => 'tickets',
             /*
              * Ticketit admin route: Where to load the ticket administration dashboard (ex. http://url/tickets-admin)
              * Default: /ticket
              */
-            'admin_route'      => 'tickets-admin',
+            'admin_route' => 'tickets-admin',
             'admin_route_path' => 'tickets-admin',
             /*
              * Template adherence: The master blade template to be extended
@@ -110,20 +107,20 @@ class SettingsTableSeeder extends Seeder
              */
             'email.template' => 'ticketit::emails.templates.ticketit',
             // resources/views/emails/templates/ticketit.blade.php
-            'email.header'           => 'Ticket Update',
-            'email.signoff'          => 'Thank you for your patience!',
-            'email.signature'        => 'Your friends',
-            'email.dashboard'        => 'My Dashboard',
+            'email.header' => 'Ticket Update',
+            'email.signoff' => 'Thank you for your patience!',
+            'email.signature' => 'Your friends',
+            'email.dashboard' => 'My Dashboard',
             'email.google_plus_link' => '#', // Toogle icon link: false or string
-            'email.facebook_link'    => '#', // Toogle icon link: false or string
-            'email.twitter_link'     => '#', // Toogle icon link: false or string
-            'email.footer'           => 'Powered by iCloudCompliance',
-            'email.footer_link'      => 'https://icloudcompliance.com',
-            'email.color_body_bg'    => '#FFFFFF',
-            'email.color_header_bg'  => '#44B7B7',
+            'email.facebook_link' => '#', // Toogle icon link: false or string
+            'email.twitter_link' => '#', // Toogle icon link: false or string
+            'email.footer' => 'Powered by iCloudCompliance',
+            'email.footer_link' => 'https://icloudcompliance.com',
+            'email.color_body_bg' => '#FFFFFF',
+            'email.color_header_bg' => '#44B7B7',
             'email.color_content_bg' => '#F46B45',
-            'email.color_footer_bg'  => '#414141',
-            'email.color_button_bg'  => '#AC4D2F',
+            'email.color_footer_bg' => '#414141',
+            'email.color_button_bg' => '#AC4D2F',
             /*
              * The default status for new created tickets
              * Default: 1
@@ -143,7 +140,7 @@ class SettingsTableSeeder extends Seeder
              * [Deprecated] User ids who are members of admin role
              * Default: 1
              */
-//            'admin_ids' => [1],
+            //            'admin_ids' => [1],
             /*
              * Pagination length: For standard pagination.
              * Default: 1
@@ -264,9 +261,9 @@ class SettingsTableSeeder extends Seeder
              */
 
             'purifier_config' => [
-                'HTML.SafeIframe'      => 'true',
+                'HTML.SafeIframe' => 'true',
                 'URI.SafeIframeRegexp' => '%^(http://|https://|//)(www.youtube.com/embed/|player.vimeo.com/video/)%',
-                'URI.AllowedSchemes'   => ['data' => true, 'http' => true, 'https' => true, 'mailto' => true, 'ftp' => true],
+                'URI.AllowedSchemes' => ['data' => true, 'http' => true, 'https' => true, 'mailto' => true, 'ftp' => true],
             ],
 
             /*

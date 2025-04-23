@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $users = Agent::users(10);
 
         // Per Category performance data
-        $ticketController = new TicketsController(new Ticket(), new Agent());
+        $ticketController = new TicketsController(new Ticket, new Agent);
         $monthly_performance = $ticketController->monthlyPerfomance($indicator_period);
 
         if (request()->has('cat_page')) {

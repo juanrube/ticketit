@@ -2,18 +2,17 @@
 
 namespace Juanrube\Ticketit;
 
-use Juanrube\Ticketit\Models\Ticket;
-use Illuminate\Support\Facades\DB;
-use Juanrube\Ticketit\Models\Comment;
-use Juanrube\Ticketit\Models\Setting;
-use Juanrube\Ticketit\Console\Htmlify;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
+use Juanrube\Ticketit\Console\Htmlify;
 use Juanrube\Ticketit\Controllers\InstallController;
-use Juanrube\Ticketit\ViewComposers\TicketItComposer;
 use Juanrube\Ticketit\Controllers\NotificationsController;
+use Juanrube\Ticketit\Models\Comment;
+use Juanrube\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Models\Ticket;
+use Juanrube\Ticketit\ViewComposers\TicketItComposer;
 use Spatie\Html\Facades\Html; // Reemplazamos Collective por Spatie
 
 class TicketitServiceProvider extends ServiceProvider
@@ -25,18 +24,18 @@ class TicketitServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!Schema::hasTable('migrations')) {
+        if (! Schema::hasTable('migrations')) {
             // Database isn't installed yet.
             return;
         }
-        $installer = new InstallController();
+        $installer = new InstallController;
 
         // if a migration or new setting is missing scape to the installation
-        if (empty($installer->inactiveMigrations()) && !$installer->inactiveSettings()) {
+        if (empty($installer->inactiveMigrations()) && ! $installer->inactiveSettings()) {
             // Send the Agent User model to the view under $u
             // Send settings to views under $setting
 
-            //cache $u
+            // cache $u
             $u = null;
 
             TicketItComposer::settings($u);
@@ -54,7 +53,7 @@ class TicketitServiceProvider extends ServiceProvider
             // Send notification when new comment is added
             Comment::creating(function ($comment) {
                 if (Setting::grab('comment_notification')) {
-                    $notification = new NotificationsController();
+                    $notification = new NotificationsController;
                     $notification->newComment($comment);
                 }
             });
@@ -64,14 +63,14 @@ class TicketitServiceProvider extends ServiceProvider
                 if (Setting::grab('status_notification')) {
                     $original_ticket = Ticket::find($modified_ticket->id);
                     if ($original_ticket->status_id != $modified_ticket->status_id || $original_ticket->completed_at != $modified_ticket->completed_at) {
-                        $notification = new NotificationsController();
+                        $notification = new NotificationsController;
                         $notification->ticketStatusUpdated($modified_ticket, $original_ticket);
                     }
                 }
                 if (Setting::grab('assigned_notification')) {
                     $original_ticket = Ticket::find($modified_ticket->id);
                     if ($original_ticket->agent->id != $modified_ticket->agent->id) {
-                        $notification = new NotificationsController();
+                        $notification = new NotificationsController;
                         $notification->ticketAgentUpdated($modified_ticket, $original_ticket);
                     }
                 }
@@ -82,7 +81,7 @@ class TicketitServiceProvider extends ServiceProvider
             // Send notification when ticket status is modified
             Ticket::created(function ($ticket) {
                 if (Setting::grab('assigned_notification')) {
-                    $notification = new NotificationsController();
+                    $notification = new NotificationsController;
                     $notification->newTicketNotifyAgent($ticket);
                 }
 
@@ -101,7 +100,7 @@ class TicketitServiceProvider extends ServiceProvider
             $this->publishes([__DIR__.'/Migrations' => base_path('database/migrations')], 'db');
 
             // Check public assets are present, publish them if not
-//            $installer->publicAssets();
+            //            $installer->publicAssets();
 
             $main_route = Setting::grab('main_route');
             $main_route_path = Setting::grab('main_route_path');
@@ -126,18 +125,18 @@ class TicketitServiceProvider extends ServiceProvider
 
             Route::get('/tickets-install', [
                 'middleware' => $authMiddleware,
-                'as'         => 'tickets.install.index',
-                'uses'       => 'Juanrube\Ticketit\Controllers\InstallController@index',
+                'as' => 'tickets.install.index',
+                'uses' => 'Juanrube\Ticketit\Controllers\InstallController@index',
             ]);
             Route::post('/tickets-install', [
                 'middleware' => $authMiddleware,
-                'as'         => 'tickets.install.setup',
-                'uses'       => 'Juanrube\Ticketit\Controllers\InstallController@setup',
+                'as' => 'tickets.install.setup',
+                'uses' => 'Juanrube\Ticketit\Controllers\InstallController@setup',
             ]);
             Route::get('/tickets-upgrade', [
                 'middleware' => $authMiddleware,
-                'as'         => 'tickets.install.upgrade',
-                'uses'       => 'Juanrube\Ticketit\Controllers\InstallController@upgrade',
+                'as' => 'tickets.install.upgrade',
+                'uses' => 'Juanrube\Ticketit\Controllers\InstallController@upgrade',
             ]);
             Route::get('/tickets', function () {
                 return redirect()->route('tickets.install.index');
@@ -169,7 +168,7 @@ class TicketitServiceProvider extends ServiceProvider
          */
 
         $this->app->singleton('command.kordy.ticketit.htmlify', function ($app) {
-            return new Htmlify();
+            return new Htmlify;
         });
         $this->commands('command.kordy.ticketit.htmlify');
     }

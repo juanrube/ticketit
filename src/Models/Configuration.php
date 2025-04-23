@@ -2,7 +2,7 @@
 
 namespace Juanrube\Ticketit\Models;
 
-use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Model;
 use Juanrube\Ticketit\Traits\ContentEllipse;
 
 class Configuration extends Model
@@ -31,11 +31,11 @@ class Configuration extends Model
      * @var array
      */
     protected $casts = [
-        'id'         => 'integer',
-        'lang'       => 'string',
-        'slug'       => 'string',
-        'value'      => 'string',
-        'default'    => 'string',
+        'id' => 'integer',
+        'lang' => 'string',
+        'slug' => 'string',
+        'value' => 'string',
+        'default' => 'string',
     ];
 
     public static $rules = [];

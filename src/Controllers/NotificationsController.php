@@ -27,9 +27,9 @@ class NotificationsController extends Controller
         $notification_owner = auth()->user();
         $template = 'ticketit::emails.status';
         $data = [
-            'ticket'             => serialize($ticket),
+            'ticket' => serialize($ticket),
             'notification_owner' => serialize($notification_owner),
-            'original_ticket'    => serialize($original_ticket),
+            'original_ticket' => serialize($original_ticket),
         ];
 
         if (strtotime($ticket->completed_at)) {
@@ -46,9 +46,9 @@ class NotificationsController extends Controller
         $notification_owner = auth()->user();
         $template = 'ticketit::emails.transfer';
         $data = [
-            'ticket'             => serialize($ticket),
+            'ticket' => serialize($ticket),
             'notification_owner' => serialize($notification_owner),
-            'original_ticket'    => serialize($original_ticket),
+            'original_ticket' => serialize($original_ticket),
         ];
 
         $this->sendNotification($template, $data, $ticket, $notification_owner,
@@ -60,7 +60,7 @@ class NotificationsController extends Controller
         $notification_owner = auth()->user();
         $template = 'ticketit::emails.assigned';
         $data = [
-            'ticket'             => serialize($ticket),
+            'ticket' => serialize($ticket),
             'notification_owner' => serialize($notification_owner),
         ];
 
@@ -71,10 +71,10 @@ class NotificationsController extends Controller
     /**
      * Send email notifications from the action owner to other involved users.
      *
-     * @param string $template
-     * @param array  $data
-     * @param object $ticket
-     * @param object $notification_owner
+     * @param  string  $template
+     * @param  array  $data
+     * @param  object  $ticket
+     * @param  object  $notification_owner
      */
     public function sendNotification($template, $data, $ticket, $notification_owner, $subject, $type)
     {
