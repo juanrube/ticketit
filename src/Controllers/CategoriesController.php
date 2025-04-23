@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -17,7 +18,7 @@ class CategoriesController extends Controller
     {
         // seconds expected for L5.8<=, minutes before that
         $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
-        $categories = \Cache::remember('ticketit::categories', $time, function () {
+        $categories = Cache::remember('ticketit::categories', $time, function () {
             return Category::all();
         });
 
@@ -41,7 +42,7 @@ class CategoriesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.category-name-has-been-created', ['name' => $request->name]));
 
-        \Cache::forget('ticketit::categories');
+        Cache::forget('ticketit::categories');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\CategoriesController@index');
     }
@@ -70,7 +71,7 @@ class CategoriesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.category-name-has-been-modified', ['name' => $request->name]));
 
-        \Cache::forget('ticketit::categories');
+        Cache::forget('ticketit::categories');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\CategoriesController@index');
     }
@@ -83,7 +84,7 @@ class CategoriesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.category-name-has-been-deleted', ['name' => $name]));
 
-        \Cache::forget('ticketit::categories');
+        Cache::forget('ticketit::categories');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\CategoriesController@index');
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -17,7 +18,7 @@ class PrioritiesController extends Controller
     {
         // seconds expected for L5.8<=, minutes before that
         $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
-        $priorities = \Cache::remember('ticketit::priorities', $time, function () {
+        $priorities = Cache::remember('ticketit::priorities', $time, function () {
             return Priority::all();
         });
 
@@ -41,7 +42,7 @@ class PrioritiesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.priority-name-has-been-created', ['name' => $request->name]));
 
-        \Cache::forget('ticketit::priorities');
+        Cache::forget('ticketit::priorities');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\PrioritiesController@index');
     }
@@ -70,7 +71,7 @@ class PrioritiesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.priority-name-has-been-modified', ['name' => $request->name]));
 
-        \Cache::forget('ticketit::priorities');
+        Cache::forget('ticketit::priorities');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\PrioritiesController@index');
     }
@@ -83,7 +84,7 @@ class PrioritiesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.priority-name-has-been-deleted', ['name' => $name]));
 
-        \Cache::forget('ticketit::priorities');
+        Cache::forget('ticketit::priorities');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\PrioritiesController@index');
     }

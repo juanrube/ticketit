@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Juanrube\Ticketit\Models;
 
-use Cache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Juanrube\Ticketit\Helpers\LaravelVersion;
 use Juanrube\Ticketit\Models\Setting as Table;

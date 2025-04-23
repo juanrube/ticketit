@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Juanrube\Ticketit\Models;
@@ -38,7 +39,7 @@ class CommentsController extends Controller
         $comment->setPurifiedContent($request->get('content'));
 
         $comment->ticket_id = $request->get('ticket_id');
-        $comment->user_id = \Auth::user()->id;
+        $comment->user_id = Auth::user()->id;
         $comment->save();
 
         $ticket = Models\Ticket::find($comment->ticket_id);

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Juanrube\Ticketit\Models;
 
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class Agent extends User
 {

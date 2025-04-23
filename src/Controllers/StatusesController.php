@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -17,7 +18,7 @@ class StatusesController extends Controller
     {
         // seconds expected for L5.8<=, minutes before that
         $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
-        $statuses = \Cache::remember('ticketit::statuses', $time, function () {
+        $statuses = Cache::remember('ticketit::statuses', $time, function () {
             return Status::all();
         });
 
@@ -41,7 +42,7 @@ class StatusesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.status-name-has-been-created', ['name' => $request->name]));
 
-        \Cache::forget('ticketit::statuses');
+        Cache::forget('ticketit::statuses');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\StatusesController@index');
     }
@@ -70,7 +71,7 @@ class StatusesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.status-name-has-been-modified', ['name' => $request->name]));
 
-        \Cache::forget('ticketit::statuses');
+        Cache::forget('ticketit::statuses');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\StatusesController@index');
     }
@@ -83,7 +84,7 @@ class StatusesController extends Controller
 
         Session::flash('status', trans('ticketit::lang.status-name-has-been-deleted', ['name' => $name]));
 
-        \Cache::forget('ticketit::statuses');
+        Cache::forget('ticketit::statuses');
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\StatusesController@index');
     }

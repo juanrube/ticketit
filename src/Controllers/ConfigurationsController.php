@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,7 +74,7 @@ class ConfigurationsController extends Controller
         $configuration->create($input);
 
         Session::flash('configuration', 'Setting saved successfully.');
-        \Cache::forget('ticketit::settings'); // refresh cached settings
+        Cache::forget('ticketit::settings'); // refresh cached settings
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\ConfigurationsController@index');
     }
@@ -107,8 +108,8 @@ class ConfigurationsController extends Controller
 
         Session::flash('configuration', trans('ticketit::lang.configuration-name-has-been-modified', ['name' => $request->name]));
         // refresh cached settings
-        \Cache::forget('ticketit::settings');
-        \Cache::forget('ticketit::settings.'.$configuration->slug);
+        Cache::forget('ticketit::settings');
+        Cache::forget('ticketit::settings.'.$configuration->slug);
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\ConfigurationsController@index');
     }

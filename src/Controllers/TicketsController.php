@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
-use Cache;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Juanrube\Ticketit\Helpers\LaravelVersion;
