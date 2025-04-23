@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Helpers;
 
 use Illuminate\Support\Arr;
@@ -7,9 +9,7 @@ use Juanrube\Ticketit\Models\Setting;
 
 class EditorLocale
 {
-    /**
-     * @return string|null
-     */
+
     public static function getEditorLocale()
     {
         $editor_locale = Setting::grab('summernote_locale');

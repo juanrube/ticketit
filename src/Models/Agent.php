@@ -1,22 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Models;
 
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class Agent extends User
 {
     protected $table = 'users';
 
-    /**
-     * list of all agents and returning collection.
-     *
-     * @param  bool  $paginate
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeAgents($query, $paginate = false)
     {
         if ($paginate) {
@@ -26,14 +20,6 @@ class Agent extends User
         }
     }
 
-    /**
-     * list of all admins and returning collection.
-     *
-     * @param  bool  $paginate
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeAdmins($query, $paginate = false)
     {
         if ($paginate) {
@@ -43,14 +29,6 @@ class Agent extends User
         }
     }
 
-    /**
-     * list of all agents and returning collection.
-     *
-     * @param  bool  $paginate
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeUsers($query, $paginate = false)
     {
         if ($paginate) {
@@ -60,14 +38,6 @@ class Agent extends User
         }
     }
 
-    /**
-     * list of all agents and returning lists array of id and name.
-     *
-     *
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeAgentsLists($query)
     {
         if (version_compare(app()->version(), '5.2.0', '>=')) {
@@ -77,11 +47,6 @@ class Agent extends User
         }
     }
 
-    /**
-     * Check if user is agent.
-     *
-     * @return bool
-     */
     public static function isAgent($id = null)
     {
         if (isset($id)) {
@@ -101,22 +66,11 @@ class Agent extends User
         return false;
     }
 
-    /**
-     * Check if user is admin.
-     *
-     * @return bool
-     */
     public static function isAdmin()
     {
         return auth()->check() && auth()->user()->ticketit_admin;
     }
 
-    /**
-     * Check if user is the assigned agent for a ticket.
-     *
-     * @param  int  $id  ticket id
-     * @return bool
-     */
     public static function isAssignedAgent($id)
     {
         return auth()->check() &&
@@ -124,12 +78,6 @@ class Agent extends User
             Auth::user()->id == Ticket::find($id)->agent->id;
     }
 
-    /**
-     * Check if user is the owner for a ticket.
-     *
-     * @param  int  $id  ticket id
-     * @return bool
-     */
     public static function isTicketOwner($id)
     {
         $ticket = Ticket::find($id);
@@ -138,19 +86,11 @@ class Agent extends User
             auth()->user()->id == $ticket->user->id;
     }
 
-    /**
-     * Get related categories.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function categories()
     {
         return $this->belongsToMany('Juanrube\Ticketit\Models\Category', 'ticketit_categories_users', 'user_id', 'category_id');
     }
 
-    /**
-     * Get related agent tickets (To be deprecated).
-     */
     public function agentTickets($complete = false)
     {
         if ($complete) {
@@ -160,11 +100,6 @@ class Agent extends User
         }
     }
 
-    /**
-     * Get related user tickets (To be deprecated).
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function userTickets($complete = false)
     {
         if ($complete) {
@@ -207,49 +142,31 @@ class Agent extends User
         return $tickets;
     }
 
-    /**
-     * Get related agent total tickets.
-     */
     public function agentTotalTickets()
     {
         return $this->hasMany('Juanrube\Ticketit\Models\Ticket', 'agent_id');
     }
 
-    /**
-     * Get related agent Completed tickets.
-     */
     public function agentCompleteTickets()
     {
         return $this->hasMany('Juanrube\Ticketit\Models\Ticket', 'agent_id')->whereNotNull('completed_at');
     }
 
-    /**
-     * Get related agent tickets.
-     */
     public function agentOpenTickets()
     {
         return $this->hasMany('Juanrube\Ticketit\Models\Ticket', 'agent_id')->whereNull('completed_at');
     }
 
-    /**
-     * Get related user total tickets.
-     */
     public function userTotalTickets()
     {
         return $this->hasMany('Juanrube\Ticketit\Models\Ticket', 'user_id');
     }
 
-    /**
-     * Get related user Completed tickets.
-     */
     public function userCompleteTickets()
     {
         return $this->hasMany('Juanrube\Ticketit\Models\Ticket', 'user_id')->whereNotNull('completed_at');
     }
 
-    /**
-     * Get related user tickets.
-     */
     public function userOpenTickets()
     {
         return $this->hasMany('Juanrube\Ticketit\Models\Ticket', 'user_id')->whereNull('completed_at');

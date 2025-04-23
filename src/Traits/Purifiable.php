@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Traits;
 
 use Juanrube\Ticketit\Models\Setting;
@@ -7,12 +9,7 @@ use Mews\Purifier\Facades\Purifier;
 
 trait Purifiable
 {
-    /**
-     * Updates the content and html attribute of the given model.
-     *
-     * @param  string  $rawHtml
-     * @return \Illuminate\Database\Eloquent\Model $this
-     */
+
     public function setPurifiedContent($rawHtml)
     {
         $this->content = Purifier::clean($rawHtml, ['HTML.Allowed' => '']);

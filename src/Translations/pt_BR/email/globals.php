@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'assigned' => 'Chamado Atribuido',
     'comment' => 'Novo Comentário',

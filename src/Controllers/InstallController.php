@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +23,7 @@ class InstallController extends Controller
 
     public function __construct()
     {
-        $migrations = \File::files(dirname(dirname(__FILE__)).'/Migrations');
+        $migrations = File::files(dirname(dirname(__FILE__)).'/Migrations');
         foreach ($migrations as $migration) {
             $this->migrations_tables[] = basename($migration, '.php');
         }
@@ -63,7 +67,7 @@ class InstallController extends Controller
 
             return view('ticketit::install.upgrade', compact('inactive_migrations', 'inactive_settings'));
         }
-        \Log::emergency('Ticketit needs upgrade, admin should login and visit ticketit-install to activate the upgrade');
+        Log::emergency('Ticketit needs upgrade, admin should login and visit ticketit-install to activate the upgrade');
 
         throw new \Exception('Ticketit needs upgrade, admin should login and visit ticketit install route');
     }
@@ -100,7 +104,7 @@ class InstallController extends Controller
 
             return redirect('/'.Setting::grab('main_route'));
         }
-        \Log::emergency('Ticketit upgrade path access: Only admin is allowed to upgrade');
+        Log::emergency('Ticketit upgrade path access: Only admin is allowed to upgrade');
 
         throw new \Exception('Ticketit upgrade path access: Only admin is allowed to upgrade');
     }
@@ -130,14 +134,9 @@ class InstallController extends Controller
 
             $this->settingsSeeder($master);
         }
-        \Cache::forget('ticketit::settings');
+        Cache::forget('ticketit::settings');
     }
 
-    /**
-     * Run the settings table seeder.
-     *
-     * @param  string  $master
-     */
     public function settingsSeeder($master = false)
     {
         $cli_path = 'config/ticketit.php'; // if seeder run from cli, use the cli path
@@ -161,11 +160,6 @@ class InstallController extends Controller
         $seeder->run();
     }
 
-    /**
-     * Get list of all files in the views folder.
-     *
-     * @return mixed
-     */
     public function viewsFilesList($dir_path)
     {
         $dir_files = File::files($dir_path);
@@ -179,11 +173,6 @@ class InstallController extends Controller
         return $files;
     }
 
-    /**
-     * Get list of all files in the views folder.
-     *
-     * @return mixed
-     */
     public function allFilesList($dir_path)
     {
         $files = [];
@@ -199,11 +188,6 @@ class InstallController extends Controller
         return $files;
     }
 
-    /**
-     * Get all Ticketit Package migrations that were not migrated.
-     *
-     * @return array
-     */
     public function inactiveMigrations()
     {
         $inactiveMigrations = [];
@@ -228,11 +212,6 @@ class InstallController extends Controller
         return $inactiveMigrations;
     }
 
-    /**
-     * Check if all Ticketit Package settings that were not installed to setting table.
-     *
-     * @return bool
-     */
     public function inactiveSettings()
     {
         $seeder = new SettingsTableSeeder;
@@ -256,11 +235,6 @@ class InstallController extends Controller
         return $inactive_settings;
     }
 
-    /**
-     * Generate demo users, agents, and tickets.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function demoDataSeeder()
     {
         $seeder = new TicketitTableSeeder;

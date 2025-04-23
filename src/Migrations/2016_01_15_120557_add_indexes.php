@@ -1,20 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-/**
- * Add indicies for better performance.
- *
- * Class AddIndexes
- */
-class AddIndexes extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::table('ticketit', function (Blueprint $table) {
@@ -38,11 +31,6 @@ class AddIndexes extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('ticketit', function (Blueprint $table) {
@@ -65,4 +53,4 @@ class AddIndexes extends Migration
             $table->dropIndex('ticketit_settings_slug_index');
         });
     }
-}
+};

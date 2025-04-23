@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,11 +15,7 @@ use Juanrube\Ticketit\Models\Setting;
 
 class ConfigurationsController extends Controller
 {
-    /**
-     * Display a listing of the Setting.
-     *
-     * @return Response
-     */
+
     public function index()
     {
         $configurations = Configuration::all();
@@ -56,22 +55,11 @@ class ConfigurationsController extends Controller
         return view('ticketit::admin.configuration.index', compact('configurations', 'configurations_by_sections'));
     }
 
-    /**
-     * Show the form for creating a new Setting.
-     *
-     * @return Response
-     */
     public function create()
     {
         return view('ticketit::admin.configuration.create');
     }
 
-    /**
-     * Store a newly created Configuration in storage.
-     *
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -86,17 +74,11 @@ class ConfigurationsController extends Controller
         $configuration->create($input);
 
         Session::flash('configuration', 'Setting saved successfully.');
-        \Cache::forget('ticketit::settings'); // refresh cached settings
+        Cache::forget('ticketit::settings'); // refresh cached settings
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\ConfigurationsController@index');
     }
 
-    /**
-     * Show the form for editing the specified Configuration.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function edit($id)
     {
         $configuration = Configuration::findOrFail($id);
@@ -106,12 +88,6 @@ class ConfigurationsController extends Controller
         return view('ticketit::admin.configuration.edit', compact('configuration', 'should_serialize', 'default_serialized'));
     }
 
-    /**
-     * Update the specified Configuration in storage.
-     *
-     * @param  int  $id
-     * @return $this|\Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         $configuration = Configuration::findOrFail($id);
@@ -132,8 +108,8 @@ class ConfigurationsController extends Controller
 
         Session::flash('configuration', trans('ticketit::lang.configuration-name-has-been-modified', ['name' => $request->name]));
         // refresh cached settings
-        \Cache::forget('ticketit::settings');
-        \Cache::forget('ticketit::settings.'.$configuration->slug);
+        Cache::forget('ticketit::settings');
+        Cache::forget('ticketit::settings.'.$configuration->slug);
 
         return redirect()->action('\Juanrube\Ticketit\Controllers\ConfigurationsController@index');
     }

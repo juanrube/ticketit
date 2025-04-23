@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
-use Cache;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Juanrube\Ticketit\Helpers\LaravelVersion;
 use Juanrube\Ticketit\Models;
@@ -79,7 +81,7 @@ class TicketsController extends Controller
 
         $this->renderTicketTable($collection);
 
-        $collection->editColumn('updated_at', '{!! \Carbon\Carbon::parse($updated_at)->diffForHumans() !!}');
+        $collection->editColumn('updated_at', '{!! \Illuminate\Support\Carbon::parse($updated_at)->diffForHumans() !!}');
 
         // method rawColumns was introduced in laravel-datatables 7, which is only compatible with >L5.4
         // in previous laravel-datatables versions escaping columns wasn't defaut
@@ -130,11 +132,6 @@ class TicketsController extends Controller
         return $collection;
     }
 
-    /**
-     * Display a listing of active tickets related to user.
-     *
-     * @return Response
-     */
     public function index()
     {
         $complete = false;
@@ -142,11 +139,6 @@ class TicketsController extends Controller
         return view('ticketit::index', compact('complete'));
     }
 
-    /**
-     * Display a listing of completed tickets related to user.
-     *
-     * @return Response
-     */
     public function indexComplete()
     {
         $complete = true;
@@ -154,12 +146,6 @@ class TicketsController extends Controller
         return view('ticketit::index', compact('complete'));
     }
 
-    /**
-     * Returns priorities, categories and statuses lists in this order
-     * Decouple it with list().
-     *
-     * @return array
-     */
     protected function PCS()
     {
         // seconds expected for L5.8<=, minutes before that
@@ -184,11 +170,6 @@ class TicketsController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create()
     {
         [$priorities, $categories] = $this->PCS();
@@ -196,12 +177,6 @@ class TicketsController extends Controller
         return view('ticketit::tickets.create', compact('priorities', 'categories'));
     }
 
-    /**
-     * Store a newly created ticket and auto assign an agent for it.
-     *
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -231,12 +206,6 @@ class TicketsController extends Controller
         return redirect()->route(Setting::grab('main_route').'.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function show($id)
     {
         $ticket = $this->tickets->findOrFail($id);
@@ -260,12 +229,6 @@ class TicketsController extends Controller
                 'close_perm', 'reopen_perm'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -300,12 +263,6 @@ class TicketsController extends Controller
         return redirect()->route(Setting::grab('main_route').'.show', $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
         $ticket = $this->tickets->findOrFail($id);
@@ -317,12 +274,6 @@ class TicketsController extends Controller
         return redirect()->route(Setting::grab('main_route').'.index');
     }
 
-    /**
-     * Mark ticket as complete.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function complete($id)
     {
         if ($this->permToClose($id) == 'yes') {
@@ -345,12 +296,6 @@ class TicketsController extends Controller
             ->with('warning', trans('ticketit::lang.you-are-not-permitted-to-do-this'));
     }
 
-    /**
-     * Reopen ticket from complete status.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function reopen($id)
     {
         if ($this->permToReopen($id) == 'yes') {
@@ -393,9 +338,6 @@ class TicketsController extends Controller
         return $select;
     }
 
-    /**
-     * @return bool
-     */
     public function permToClose($id)
     {
         $close_ticket_perm = Setting::grab('close_ticket_perm');
@@ -413,9 +355,6 @@ class TicketsController extends Controller
         return 'no';
     }
 
-    /**
-     * @return bool
-     */
     public function permToReopen($id)
     {
         $reopen_ticket_perm = Setting::grab('reopen_ticket_perm');
@@ -430,12 +369,6 @@ class TicketsController extends Controller
         return 'no';
     }
 
-    /**
-     * Calculate average closing period of days per category for number of months.
-     *
-     * @param  int  $period
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
     public function monthlyPerfomance($period = 2)
     {
         $categories = Category::all();
@@ -460,12 +393,6 @@ class TicketsController extends Controller
         return $records;
     }
 
-    /**
-     * Calculate the date length it took to solve a ticket.
-     *
-     * @param  Ticket  $ticket
-     * @return int|false
-     */
     public function ticketPerformance($ticket)
     {
         if ($ticket->completed_at == null) {
@@ -479,12 +406,6 @@ class TicketsController extends Controller
         return $length;
     }
 
-    /**
-     * Calculate the average date length it took to solve tickets within date period.
-     *
-     *
-     * @return int
-     */
     public function intervalPerformance($from, $to, $cat_id = false)
     {
         if ($cat_id) {

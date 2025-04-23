@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -68,19 +70,9 @@ class NotificationsController extends Controller
             $notification_owner->name.trans('ticketit::lang.notify-created-ticket').$ticket->subject, 'agent');
     }
 
-    /**
-     * Send email notifications from the action owner to other involved users.
-     *
-     * @param  string  $template
-     * @param  array  $data
-     * @param  object  $ticket
-     * @param  object  $notification_owner
-     */
     public function sendNotification($template, $data, $ticket, $notification_owner, $subject, $type)
     {
-        /**
-         * @var User
-         */
+
         $to = null;
 
         if ($type != 'agent') {

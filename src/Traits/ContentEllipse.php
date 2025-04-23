@@ -1,15 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Traits;
 
 trait ContentEllipse
 {
-    /**
-     * Cuts the content of a comment or a ticket content if it's too long.
-     *
-     * @param  int  $maxlength
-     * @return string
-     */
+
     public function getShortContent($maxlength = 50, $attr = 'content')
     {
         $content = $this->{$attr};

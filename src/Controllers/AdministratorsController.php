@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -52,12 +54,6 @@ class AdministratorsController extends Controller
         return redirect()->action('\Juanrube\Ticketit\Controllers\AdministratorsController@index');
     }
 
-    /**
-     * Assign users as administrators.
-     *
-     *
-     * @return array
-     */
     public function addAdministrators($user_ids)
     {
         $users = Agent::find($user_ids);
@@ -70,12 +66,6 @@ class AdministratorsController extends Controller
         return $users_list;
     }
 
-    /**
-     * Remove user from the administrators.
-     *
-     *
-     * @return mixed
-     */
     public function removeAdministrator($id)
     {
         $administrator = Agent::find($id);
@@ -94,9 +84,6 @@ class AdministratorsController extends Controller
         return $administrator;
     }
 
-    /**
-     * Sync Administrator categories with the selected categories got from update form.
-     */
     public function syncAdministratorCategories($id, Request $request)
     {
         $form_cats = ($request->input('administrator_cats') == null) ? [] : $request->input('administrator_cats');

@@ -1,15 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class EnlargeSettingsColumns extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         // make value, default columns bigger
@@ -19,11 +17,6 @@ class EnlargeSettingsColumns extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('ticketit_settings', function (Blueprint $table) {
@@ -31,4 +24,4 @@ class EnlargeSettingsColumns extends Migration
             $table->string('default')->change();
         });
     }
-}
+};

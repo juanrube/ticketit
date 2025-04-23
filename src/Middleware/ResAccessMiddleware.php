@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Juanrube\Ticketit\Middleware;
 
 use Closure;
@@ -9,12 +11,7 @@ use Juanrube\Ticketit\Models\Setting;
 
 class ResAccessMiddleware
 {
-    /**
-     * Run the request filter.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
+
     public function handle($request, Closure $next)
     {
         if (Agent::isAdmin()) {
