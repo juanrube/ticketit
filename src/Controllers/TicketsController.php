@@ -1,17 +1,17 @@
 <?php
 
-namespace Kordy\Ticketit\Controllers;
+namespace Juanrube\Ticketit\Controllers;
 
-use App\Http\Controllers\Controller;
 use Cache;
 use Carbon\Carbon;
+use Juanrube\Ticketit\Models;
 use Illuminate\Http\Request;
-use Kordy\Ticketit\Helpers\LaravelVersion;
-use Kordy\Ticketit\Models;
-use Kordy\Ticketit\Models\Agent;
-use Kordy\Ticketit\Models\Category;
-use Kordy\Ticketit\Models\Setting;
-use Kordy\Ticketit\Models\Ticket;
+use Juanrube\Ticketit\Models\Agent;
+use Juanrube\Ticketit\Models\Ticket;
+use Juanrube\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Models\Category;
+use App\Http\Controllers\Controller;
+use Juanrube\Ticketit\Helpers\LaravelVersion;
 
 class TicketsController extends Controller
 {
@@ -20,9 +20,9 @@ class TicketsController extends Controller
 
     public function __construct(Ticket $tickets, Agent $agent)
     {
-        $this->middleware('Kordy\Ticketit\Middleware\ResAccessMiddleware', ['only' => ['show']]);
-        $this->middleware('Kordy\Ticketit\Middleware\IsAgentMiddleware', ['only' => ['edit', 'update']]);
-        $this->middleware('Kordy\Ticketit\Middleware\IsAdminMiddleware', ['only' => ['destroy']]);
+        $this->middleware('Juanrube\Ticketit\Middleware\ResAccessMiddleware', ['only' => ['show']]);
+        $this->middleware('Juanrube\Ticketit\Middleware\IsAgentMiddleware', ['only' => ['edit', 'update']]);
+        $this->middleware('Juanrube\Ticketit\Middleware\IsAdminMiddleware', ['only' => ['destroy']]);
 
         $this->tickets = $tickets;
         $this->agent = $agent;
@@ -30,11 +30,7 @@ class TicketsController extends Controller
 
     public function data($complete = false)
     {
-        if (LaravelVersion::min('5.4')) {
-            $datatables = app(\Yajra\DataTables\DataTables::class);
-        } else {
-            $datatables = app(\Yajra\Datatables\Datatables::class);
-        }
+        $datatables = app(\Yajra\Datatables\Datatables::class);
 
         $user = $this->agent->find(auth()->user()->id);
 

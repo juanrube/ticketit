@@ -1,11 +1,11 @@
 <?php
 
-namespace Kordy\Ticketit\Models;
+namespace Juanrube\Ticketit\Models;
 
+use Illuminate\Support\Carbon;
+use Juanrube\Ticketit\Traits\Purifiable;
 use Illuminate\Database\Eloquent\Model;
-use Jenssegers\Date\Date;
-use Kordy\Ticketit\Traits\ContentEllipse;
-use Kordy\Ticketit\Traits\Purifiable;
+use Juanrube\Ticketit\Traits\ContentEllipse;
 
 class Ticket extends Model
 {
@@ -57,7 +57,7 @@ class Ticket extends Model
      */
     public function status()
     {
-        return $this->belongsTo('Kordy\Ticketit\Models\Status', 'status_id');
+        return $this->belongsTo('Juanrube\Ticketit\Models\Status', 'status_id');
     }
 
     /**
@@ -67,7 +67,7 @@ class Ticket extends Model
      */
     public function priority()
     {
-        return $this->belongsTo('Kordy\Ticketit\Models\Priority', 'priority_id');
+        return $this->belongsTo('Juanrube\Ticketit\Models\Priority', 'priority_id');
     }
 
     /**
@@ -77,7 +77,7 @@ class Ticket extends Model
      */
     public function category()
     {
-        return $this->belongsTo('Kordy\Ticketit\Models\Category', 'category_id');
+        return $this->belongsTo('Juanrube\Ticketit\Models\Category', 'category_id');
     }
 
     /**
@@ -87,7 +87,7 @@ class Ticket extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     /**
@@ -97,7 +97,7 @@ class Ticket extends Model
      */
     public function agent()
     {
-        return $this->belongsTo('Kordy\Ticketit\Models\Agent', 'agent_id');
+        return $this->belongsTo('Juanrube\Ticketit\Models\Agent', 'agent_id');
     }
 
     /**
@@ -107,26 +107,15 @@ class Ticket extends Model
      */
     public function comments()
     {
-        return $this->hasMany('Kordy\Ticketit\Models\Comment', 'ticket_id');
+        return $this->hasMany('Juanrube\Ticketit\Models\Comment', 'ticket_id');
     }
-
-//    /**
-    //     * Get Ticket audits
-    //     *
-    //     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    //     */
-    //    public function audits()
-    //    {
-    //        return $this->hasMany('Kordy\Ticketit\Models\Audit', 'ticket_id');
-    //    }
-    //
 
     /**
      * @see Illuminate/Database/Eloquent/Model::asDateTime
      */
     public function freshTimestamp()
     {
-        return new Date();
+        return Carbon::now(); // Usamos Carbon en lugar de Jenssegers\Date
     }
 
     /**
@@ -135,16 +124,16 @@ class Ticket extends Model
     protected function asDateTime($value)
     {
         if (is_numeric($value)) {
-            return Date::createFromTimestamp($value);
+            return Carbon::createFromTimestamp($value); // Usamos Carbon
         } elseif (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value)) {
-            return Date::createFromFormat('Y-m-d', $value)->startOfDay();
+            return Carbon::createFromFormat('Y-m-d', $value)->startOfDay(); // Usamos Carbon
         } elseif (!$value instanceof \DateTimeInterface) {
             $format = $this->getDateFormat();
 
-            return Date::createFromFormat($format, $value);
+            return Carbon::createFromFormat($format, $value); // Usamos Carbon
         }
 
-        return Date::instance($value);
+        return Carbon::instance($value); // Usamos Carbon
     }
 
     /**

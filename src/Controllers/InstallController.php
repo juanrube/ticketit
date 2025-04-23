@@ -1,17 +1,17 @@
 <?php
 
-namespace Kordy\Ticketit\Controllers;
+namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Kordy\Ticketit\Models\Agent;
-use Kordy\Ticketit\Models\Setting;
-use Kordy\Ticketit\Seeds\SettingsTableSeeder;
-use Kordy\Ticketit\Seeds\TicketitTableSeeder;
+use Juanrube\Ticketit\Models\Agent;
+use Juanrube\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Seeds\SettingsTableSeeder;
+use Juanrube\Ticketit\Seeds\TicketitTableSeeder;
 
 class InstallController extends Controller
 {
@@ -28,7 +28,7 @@ class InstallController extends Controller
     public function publicAssets()
     {
         $public = $this->allFilesList(public_path('vendor/ticketit'));
-        $assets = $this->allFilesList(base_path('vendor/kordy/ticketit/src/Public'));
+        $assets = $this->allFilesList(base_path('vendor/juanrube/ticketit/src/Public'));
         if ($public !== $assets) {
             Artisan::call('vendor:publish', [
                 '--provider' => 'Kordy\\Ticketit\\TicketitServiceProvider',
@@ -50,12 +50,8 @@ class InstallController extends Controller
         ) {
             $views_files_list = $this->viewsFilesList(resource_path('views')) + ['another' => trans('ticketit::install.another-file')];
             $inactive_migrations = $this->inactiveMigrations();
-            // if Laravel v5.2 or 5.3
-            if (version_compare(app()->version(), '5.2.0', '>=')) {
-                $users_list = User::pluck('name', 'id')->toArray();
-            } else { // if Laravel v5.1
-                $users_list = User::lists('name', 'id')->toArray();
-            }
+            
+            $users_list = User::pluck('name', 'id')->toArray();
 
             return view('ticketit::install.index', compact('views_files_list', 'inactive_migrations', 'users_list'));
         }
@@ -242,12 +238,7 @@ class InstallController extends Controller
         $seeder = new SettingsTableSeeder();
 
         // Package Settings
-        // if Laravel v5.2 or 5.3
-        if (version_compare(app()->version(), '5.2.0', '>=')) {
-            $installed_settings = DB::table('ticketit_settings')->pluck('value', 'slug');
-        } else { // if Laravel 5.1
-            $installed_settings = DB::table('ticketit_settings')->lists('value', 'slug');
-        }
+        $installed_settings = DB::table('ticketit_settings')->pluck('value', 'slug');
 
         if (!is_array($installed_settings)) {
             $installed_settings = $installed_settings->toArray();

@@ -1,10 +1,10 @@
 <?php
 
-namespace Kordy\Ticketit\Seeds;
+namespace Juanrube\Ticketit\Seeds;
 
 use Illuminate\Database\Seeder;
-use Kordy\Ticketit\Helpers\LaravelVersion;
-use Kordy\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Helpers\LaravelVersion;
+use Juanrube\Ticketit\Models\Setting;
 
 class SettingsTableSeeder extends Seeder
 {
@@ -102,7 +102,7 @@ class SettingsTableSeeder extends Seeder
              * Switches between bootstrap 3 and 4
              * Default: 3 for <L5.6, 4 for >=L5.6
              */
-            'bootstrap_version' => LaravelVersion::min('5.6') ? '4' : '3',
+            'bootstrap_version' => '5',
 
             /*
              * Template adherence: The email blade template to be extended
@@ -117,8 +117,8 @@ class SettingsTableSeeder extends Seeder
             'email.google_plus_link' => '#', // Toogle icon link: false or string
             'email.facebook_link'    => '#', // Toogle icon link: false or string
             'email.twitter_link'     => '#', // Toogle icon link: false or string
-            'email.footer'           => 'Powered by Ticketit',
-            'email.footer_link'      => 'https://github.com/thekordy/ticketit',
+            'email.footer'           => 'Powered by iCloudCompliance',
+            'email.footer_link'      => 'https://icloudcompliance.com',
             'email.color_body_bg'    => '#FFFFFF',
             'email.color_header_bg'  => '#44B7B7',
             'email.color_content_bg' => '#F46B45',
@@ -252,7 +252,7 @@ class SettingsTableSeeder extends Seeder
              *
              * This setting stores the path to the json config file, relative to project route
              */
-            'summernote_options_json_file' => 'vendor/kordy/ticketit/src/JSON/summernote_init.json',
+            'summernote_options_json_file' => 'vendor/juanrube/ticketit/src/JSON/summernote_init.json',
 
             /*
              * Set which html tags are allowed
@@ -276,7 +276,7 @@ class SettingsTableSeeder extends Seeder
              *
              * Default: __DIR__.'/routes.php'
              */
-            'routes' => base_path('vendor/kordy/ticketit/src').'/routes.php',
+            'routes' => base_path('vendor/juanrube/ticketit/src').'/routes.php',
 
         ];
     }

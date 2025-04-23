@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+  },
+  "scripts": {
+    "dev": "vite --force",
+    "setup": "npm i",
+    "publish": "vite build"
+  },
+  "devDependencies": {
+    "laravel-vite-plugin": "^1.2.0",
+    "vite": "^6.3.2"
+  },
+  "name": "juanrube-ticketit",
+  "description": "A simple helpdesk tickets system for Laravel > 10.* which integrates smoothly with Laravel default users and auth system",
+  "private": true,
+  "keywords": ["laravel", "helpdesk", "ticket", "support"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Juan M. Rube",
+      "email": "jmrube10@gmail.com"
+    }
+  ]
+}

@@ -1,13 +1,7 @@
 <?php
 
-namespace Kordy\Ticketit\Helpers;
+namespace Juanrube\Ticketit\Helpers;
 
-/**
- * This file containes the version of different external JS and CSS libraries
- * that are included.
- *
- * Class Cdn
- */
 class Cdn
 {
     const CodeMirror = '5.48.4';
@@ -18,4 +12,15 @@ class Cdn
     // https://datatables.net/download/
     const DataTables = '1.10.18';
     const DataTablesResponsive = '2.2.2';
+    
+    /**
+     * Get the URL for a given asset using Vite.
+     *
+     * @param string $asset
+     * @return string
+     */
+    public static function asset($asset)
+    {
+        return vite($asset, true);
+    }
 }

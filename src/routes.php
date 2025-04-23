@@ -1,16 +1,14 @@
 <?php
 
-Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddleware()], function () use ($main_route, $main_route_path, $admin_route, $admin_route_path) {
-
-    //Route::group(['middleware' => '', function () use ($main_route) {
+Route::group(['middleware' => \Juanrube\Ticketit\Helpers\LaravelVersion::authMiddleware()], function () use ($main_route, $main_route_path, $admin_route, $admin_route_path) {
     //Ticket public route
-    Route::get("$main_route_path/complete", 'Kordy\Ticketit\Controllers\TicketsController@indexComplete')
+    Route::get("$main_route_path/complete", 'Juanrube\Ticketit\Controllers\TicketsController@indexComplete')
             ->name("$main_route-complete");
-    Route::get("$main_route_path/data/{id?}", 'Kordy\Ticketit\Controllers\TicketsController@data')
+    Route::get("$main_route_path/data/{id?}", 'Juanrube\Ticketit\Controllers\TicketsController@data')
             ->name("$main_route.data");
 
     $field_name = last(explode('/', $main_route_path));
-    Route::resource($main_route_path, 'Kordy\Ticketit\Controllers\TicketsController', [
+    Route::resource($main_route_path, 'Juanrube\Ticketit\Controllers\TicketsController', [
             'names' => [
                 'index'   => $main_route.'.index',
                 'store'   => $main_route.'.store',
@@ -27,7 +25,7 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
 
     //Ticket Comments public route
     $field_name = last(explode('/', "$main_route_path-comment"));
-    Route::resource("$main_route_path-comment", 'Kordy\Ticketit\Controllers\CommentsController', [
+    Route::resource("$main_route_path-comment", 'Juanrube\Ticketit\Controllers\CommentsController', [
             'names' => [
                 'index'   => "$main_route-comment.index",
                 'store'   => "$main_route-comment.store",
@@ -43,33 +41,33 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
         ]);
 
     //Ticket complete route for permitted user.
-    Route::get("$main_route_path/{id}/complete", 'Kordy\Ticketit\Controllers\TicketsController@complete')
+    Route::get("$main_route_path/{id}/complete", 'Juanrube\Ticketit\Controllers\TicketsController@complete')
             ->name("$main_route.complete");
 
     //Ticket reopen route for permitted user.
-    Route::get("$main_route_path/{id}/reopen", 'Kordy\Ticketit\Controllers\TicketsController@reopen')
+    Route::get("$main_route_path/{id}/reopen", 'Juanrube\Ticketit\Controllers\TicketsController@reopen')
             ->name("$main_route.reopen");
     //});
 
-    Route::group(['middleware' => 'Kordy\Ticketit\Middleware\IsAgentMiddleware'], function () use ($main_route, $main_route_path) {
+    Route::group(['middleware' => 'Juanrube\Ticketit\Middleware\IsAgentMiddleware'], function () use ($main_route, $main_route_path) {
 
         //API return list of agents in particular category
         Route::get("$main_route_path/agents/list/{category_id?}/{ticket_id?}", [
             'as'   => $main_route.'agentselectlist',
-            'uses' => 'Kordy\Ticketit\Controllers\TicketsController@agentSelectList',
+            'uses' => 'Juanrube\Ticketit\Controllers\TicketsController@agentSelectList',
         ]);
     });
 
-    Route::group(['middleware' => 'Kordy\Ticketit\Middleware\IsAdminMiddleware'], function () use ($admin_route, $admin_route_path) {
+    Route::group(['middleware' => 'Juanrube\Ticketit\Middleware\IsAdminMiddleware'], function () use ($admin_route, $admin_route_path) {
         //Ticket admin index route (ex. http://url/tickets-admin/)
         Route::get("$admin_route_path/indicator/{indicator_period?}", [
                 'as'   => $admin_route.'.dashboard.indicator',
-                'uses' => 'Kordy\Ticketit\Controllers\DashboardController@index',
+                'uses' => 'Juanrube\Ticketit\Controllers\DashboardController@index',
         ]);
-        Route::get($admin_route_path, 'Kordy\Ticketit\Controllers\DashboardController@index');
+        Route::get($admin_route_path, 'Juanrube\Ticketit\Controllers\DashboardController@index');
 
         //Ticket statuses admin routes (ex. http://url/tickets-admin/status)
-        Route::resource("$admin_route_path/status", 'Kordy\Ticketit\Controllers\StatusesController', [
+        Route::resource("$admin_route_path/status", 'Juanrube\Ticketit\Controllers\StatusesController', [
             'names' => [
                 'index'   => "$admin_route.status.index",
                 'store'   => "$admin_route.status.store",
@@ -82,7 +80,7 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
         ]);
 
         //Ticket priorities admin routes (ex. http://url/tickets-admin/priority)
-        Route::resource("$admin_route_path/priority", 'Kordy\Ticketit\Controllers\PrioritiesController', [
+        Route::resource("$admin_route_path/priority", 'Juanrube\Ticketit\Controllers\PrioritiesController', [
             'names' => [
                 'index'   => "$admin_route.priority.index",
                 'store'   => "$admin_route.priority.store",
@@ -95,7 +93,7 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
         ]);
 
         //Agents management routes (ex. http://url/tickets-admin/agent)
-        Route::resource("$admin_route_path/agent", 'Kordy\Ticketit\Controllers\AgentsController', [
+        Route::resource("$admin_route_path/agent", 'Juanrube\Ticketit\Controllers\AgentsController', [
             'names' => [
                 'index'   => "$admin_route.agent.index",
                 'store'   => "$admin_route.agent.store",
@@ -108,7 +106,7 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
         ]);
 
         //Agents management routes (ex. http://url/tickets-admin/agent)
-        Route::resource("$admin_route_path/category", 'Kordy\Ticketit\Controllers\CategoriesController', [
+        Route::resource("$admin_route_path/category", 'Juanrube\Ticketit\Controllers\CategoriesController', [
             'names' => [
                 'index'   => "$admin_route.category.index",
                 'store'   => "$admin_route.category.store",
@@ -121,7 +119,7 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
         ]);
 
         //Settings configuration routes (ex. http://url/tickets-admin/configuration)
-        Route::resource("$admin_route_path/configuration", 'Kordy\Ticketit\Controllers\ConfigurationsController', [
+        Route::resource("$admin_route_path/configuration", 'Juanrube\Ticketit\Controllers\ConfigurationsController', [
             'names' => [
                 'index'   => "$admin_route.configuration.index",
                 'store'   => "$admin_route.configuration.store",
@@ -134,7 +132,7 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
         ]);
 
         //Administrators configuration routes (ex. http://url/tickets-admin/administrators)
-        Route::resource("$admin_route_path/administrator", 'Kordy\Ticketit\Controllers\AdministratorsController', [
+        Route::resource("$admin_route_path/administrator", 'Juanrube\Ticketit\Controllers\AdministratorsController', [
             'names' => [
                 'index'   => "$admin_route.administrator.index",
                 'store'   => "$admin_route.administrator.store",
@@ -146,7 +144,5 @@ Route::group(['middleware' => \Kordy\Ticketit\Helpers\LaravelVersion::authMiddle
             ],
         ]);
 
-        //Tickets demo data route (ex. http://url/tickets-admin/demo-seeds/)
-        // Route::get("$admin_route/demo-seeds", 'Kordy\Ticketit\Controllers\InstallController@demoDataSeeder');
     });
 });

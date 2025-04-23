@@ -10,16 +10,16 @@
             document.getElementsByTagName("head")[0].appendChild(file)
         }
     }
-    loadCSS({!! '"'.asset('https://cdn.datatables.net/v/bs4/dt-' . Kordy\Ticketit\Helpers\Cdn::DataTables . '/r-' . Kordy\Ticketit\Helpers\Cdn::DataTablesResponsive . '/datatables.min.css').'"' !!});
+    loadCSS({!! '"'.asset('https://cdn.datatables.net/v/bs4/dt-' . Juanrube\Ticketit\Helpers\Cdn::DataTables . '/r-' . Juanrube\Ticketit\Helpers\Cdn::DataTablesResponsive . '/datatables.min.css').'"' !!});
     @if($editor_enabled)
-        loadCSS({!! '"'.asset('https://cdnjs.cloudflare.com/ajax/libs/summernote/' . Kordy\Ticketit\Helpers\Cdn::Summernote . '/summernote-bs4.css').'"' !!});
+        loadCSS({!! '"'.asset('https://cdnjs.cloudflare.com/ajax/libs/summernote/' . Juanrube\Ticketit\Helpers\Cdn::Summernote . '/summernote-bs4.css').'"' !!});
         @if($include_font_awesome)
-            loadCSS({!! '"'.asset('https://use.fontawesome.com/releases/v' . Kordy\Ticketit\Helpers\Cdn::FontAwesome5 . '/css/solid.css').'"' !!});
-            loadCSS({!! '"'.asset('https://use.fontawesome.com/releases/v' . Kordy\Ticketit\Helpers\Cdn::FontAwesome5 . '/css/fontawesome.css').'"' !!});
+            loadCSS({!! '"'.asset('https://use.fontawesome.com/releases/v' . Juanrube\Ticketit\Helpers\Cdn::FontAwesome5 . '/css/solid.css').'"' !!});
+            loadCSS({!! '"'.asset('https://use.fontawesome.com/releases/v' . Juanrube\Ticketit\Helpers\Cdn::FontAwesome5 . '/css/fontawesome.css').'"' !!});
         @endif
         @if($codemirror_enabled)
-            loadCSS({!! '"'.asset('https://cdnjs.cloudflare.com/ajax/libs/codemirror/' . Kordy\Ticketit\Helpers\Cdn::CodeMirror . '/codemirror.min.css').'"' !!});
-            loadCSS({!! '"'.asset('https://cdnjs.cloudflare.com/ajax/libs/codemirror/' . Kordy\Ticketit\Helpers\Cdn::CodeMirror . '/theme/'.$codemirror_theme.'.min.css').'"' !!});
+            loadCSS({!! '"'.asset('https://cdnjs.cloudflare.com/ajax/libs/codemirror/' . Juanrube\Ticketit\Helpers\Cdn::CodeMirror . '/codemirror.min.css').'"' !!});
+            loadCSS({!! '"'.asset('https://cdnjs.cloudflare.com/ajax/libs/codemirror/' . Juanrube\Ticketit\Helpers\Cdn::CodeMirror . '/theme/'.$codemirror_theme.'.min.css').'"' !!});
         @endif
     @endif
 </script>

@@ -1,17 +1,17 @@
 <?php
 
-namespace Kordy\Ticketit\Controllers;
+namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Kordy\Ticketit\Models;
+use Juanrube\Ticketit\Models;
 
 class CommentsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('Kordy\Ticketit\Middleware\IsAdminMiddleware', ['only' => ['edit', 'update', 'destroy']]);
-        $this->middleware('Kordy\Ticketit\Middleware\ResAccessMiddleware', ['only' => 'store']);
+        $this->middleware('Juanrube\Ticketit\Middleware\IsAdminMiddleware', ['only' => ['edit', 'update', 'destroy']]);
+        $this->middleware('Juanrube\Ticketit\Middleware\ResAccessMiddleware', ['only' => 'store']);
     }
 
     /**

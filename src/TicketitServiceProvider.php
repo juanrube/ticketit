@@ -1,21 +1,20 @@
 <?php
 
-namespace Kordy\Ticketit;
+namespace Juanrube\Ticketit;
 
-use Collective\Html\FormFacade as CollectiveForm;
+use Juanrube\Ticketit\Models\Ticket;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
+use Juanrube\Ticketit\Models\Comment;
+use Juanrube\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Console\Htmlify;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
-use Kordy\Ticketit\Console\Htmlify;
-use Kordy\Ticketit\Controllers\InstallController;
-use Kordy\Ticketit\Controllers\NotificationsController;
-use Kordy\Ticketit\Helpers\LaravelVersion;
-use Kordy\Ticketit\Models\Comment;
-use Kordy\Ticketit\Models\Setting;
-use Kordy\Ticketit\Models\Ticket;
-use Kordy\Ticketit\ViewComposers\TicketItComposer;
+use Juanrube\Ticketit\Controllers\InstallController;
+use Juanrube\Ticketit\ViewComposers\TicketItComposer;
+use Juanrube\Ticketit\Controllers\NotificationsController;
+use Spatie\Html\Facades\Html; // Reemplazamos Collective por Spatie
 
 class TicketitServiceProvider extends ServiceProvider
 {
@@ -42,11 +41,9 @@ class TicketitServiceProvider extends ServiceProvider
 
             TicketItComposer::settings($u);
 
-            // Adding HTML5 color picker to form elements
-            CollectiveForm::macro('custom', function ($type, $name, $value = '#000000', $options = []) {
-                $field = $this->input($type, $name, $value, $options);
-
-                return $field;
+            // Reemplazamos el macro de Collective por Spatie
+            Html::macro('custom', function ($type, $name, $value = '#000000', $options = []) {
+                return Html::input($type, $name, $value, $options);
             });
 
             TicketItComposer::general();
@@ -94,10 +91,7 @@ class TicketitServiceProvider extends ServiceProvider
 
             $this->loadTranslationsFrom(__DIR__.'/Translations', 'ticketit');
 
-            $viewsDirectory = __DIR__.'/Views/bootstrap3';
-            if (Setting::grab('bootstrap_version') == '4') {
-                $viewsDirectory = __DIR__.'/Views/bootstrap4';
-            }
+            $viewsDirectory = __DIR__.'/Views/bootstrap5';
 
             $this->loadViewsFrom($viewsDirectory, 'ticketit');
 
@@ -125,7 +119,7 @@ class TicketitServiceProvider extends ServiceProvider
                 || Request::path() == 'tickets-admin'
                 || (isset($_SERVER['ARTISAN_TICKETIT_INSTALLING']) && $_SERVER['ARTISAN_TICKETIT_INSTALLING'])) {
             $this->loadTranslationsFrom(__DIR__.'/Translations', 'ticketit');
-            $this->loadViewsFrom(__DIR__.'/Views/bootstrap3', 'ticketit');
+            $this->loadViewsFrom(__DIR__.'/Views/bootstrap5', 'ticketit');
             $this->publishes([__DIR__.'/Migrations' => base_path('database/migrations')], 'db');
 
             $authMiddleware = Helpers\LaravelVersion::authMiddleware();
@@ -133,17 +127,17 @@ class TicketitServiceProvider extends ServiceProvider
             Route::get('/tickets-install', [
                 'middleware' => $authMiddleware,
                 'as'         => 'tickets.install.index',
-                'uses'       => 'Kordy\Ticketit\Controllers\InstallController@index',
+                'uses'       => 'Juanrube\Ticketit\Controllers\InstallController@index',
             ]);
             Route::post('/tickets-install', [
                 'middleware' => $authMiddleware,
                 'as'         => 'tickets.install.setup',
-                'uses'       => 'Kordy\Ticketit\Controllers\InstallController@setup',
+                'uses'       => 'Juanrube\Ticketit\Controllers\InstallController@setup',
             ]);
             Route::get('/tickets-upgrade', [
                 'middleware' => $authMiddleware,
                 'as'         => 'tickets.install.upgrade',
-                'uses'       => 'Kordy\Ticketit\Controllers\InstallController@upgrade',
+                'uses'       => 'Juanrube\Ticketit\Controllers\InstallController@upgrade',
             ]);
             Route::get('/tickets', function () {
                 return redirect()->route('tickets.install.index');
@@ -164,21 +158,11 @@ class TicketitServiceProvider extends ServiceProvider
         /*
          * Register the service provider for the dependency.
          */
-        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
+        $this->app->register(\Spatie\Html\HtmlServiceProvider::class); // Reemplazamos Collective por Spatie
 
-        if (LaravelVersion::min('5.4')) {
-            $this->app->register(\Yajra\DataTables\DataTablesServiceProvider::class);
-        } else {
-            $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
-        }
+        $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
 
-        $this->app->register(\Jenssegers\Date\DateServiceProvider::class);
         $this->app->register(\Mews\Purifier\PurifierServiceProvider::class);
-        /*
-         * Create aliases for the dependency.
-         */
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('CollectiveForm', 'Collective\Html\FormFacade');
 
         /*
          * Register htmlify command. Need to run this when upgrading from <=0.2.2

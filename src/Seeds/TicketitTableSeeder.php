@@ -1,6 +1,6 @@
 <?php
 
-namespace Kordy\Ticketit\Seeds;
+namespace Juanrube\Ticketit\Seeds;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -55,7 +55,7 @@ class TicketitTableSeeder extends Seeder
         $agents_counter = 1;
 
         for ($a = 1; $a <= $this->agents_qty; $a++) {
-            $agent_info = new \App\User();
+            $agent_info = new \App\Models\User();
             $agent_info->name = $faker->name;
             $agent_info->email = 'agent'.$agents_counter.$this->email_domain;
             $agent_info->ticketit_agent = 1;
@@ -67,7 +67,7 @@ class TicketitTableSeeder extends Seeder
 
         // create tickets statuses
         foreach ($this->statuses as $name => $color) {
-            $status = \Kordy\Ticketit\Models\Status::create([
+            $status = \Juanrube\Ticketit\Models\Status::create([
                 'name'  => $name,
                 'color' => $color,
             ]);
@@ -76,7 +76,7 @@ class TicketitTableSeeder extends Seeder
         $counter = 0;
         // create tickets statuses
         foreach ($this->categories as $name => $color) {
-            $category = \Kordy\Ticketit\Models\Category::create([
+            $category = \Juanrube\Ticketit\Models\Category::create([
                 'name'  => $name,
                 'color' => $color,
             ]);
@@ -87,20 +87,20 @@ class TicketitTableSeeder extends Seeder
 
         // create tickets statuses
         foreach ($this->priorities as $name => $color) {
-            $priority = \Kordy\Ticketit\Models\Priority::create([
+            $priority = \Juanrube\Ticketit\Models\Priority::create([
                 'name'  => $name,
                 'color' => $color,
             ]);
         }
-        $categories_qty = \Kordy\Ticketit\Models\Category::count();
-        $priorities_qty = \Kordy\Ticketit\Models\Priority::count();
-        $statuses_qty = \Kordy\Ticketit\Models\Status::count();
+        $categories_qty = \Juanrube\Ticketit\Models\Category::count();
+        $priorities_qty = \Juanrube\Ticketit\Models\Priority::count();
+        $statuses_qty = \Juanrube\Ticketit\Models\Status::count();
 
         // create users
         $users_counter = 1;
 
         for ($u = 1; $u <= $this->users_qty; $u++) {
-            $user_info = new \App\User();
+            $user_info = new \App\Models\User();
             $user_info->name = $faker->name;
             $user_info->email = 'user'.$users_counter.$this->email_domain;
             $user_info->ticketit_agent = 0;
@@ -117,7 +117,7 @@ class TicketitTableSeeder extends Seeder
                     $rand_status = rand(1, $statuses_qty);
                 } while ($rand_status == $this->default_closed_status_id);
 
-                $category = \Kordy\Ticketit\Models\Category::find($rand_category);
+                $category = \Juanrube\Ticketit\Models\Category::find($rand_category);
 
                 if (version_compare(app()->version(), '5.2.0', '>=')) {
                     $agents = $category->agents()->pluck('name', 'id')->toArray();
@@ -131,7 +131,7 @@ class TicketitTableSeeder extends Seeder
                 $random_complete = rand($this->tickets_min_close_period,
                                         $this->tickets_max_close_period);
 
-                $ticket = new \Kordy\Ticketit\Models\Ticket();
+                $ticket = new \Juanrube\Ticketit\Models\Ticket();
                 $ticket->subject = $faker->text(50);
                 $ticket->content = $faker->paragraphs(3, true);
                 $ticket->html = nl2br($ticket->content);
@@ -164,7 +164,7 @@ class TicketitTableSeeder extends Seeder
                         '-'.$random_create.' days', '-'.($random_create - $random_complete).' days');
                     }
 
-                    $comment = new \Kordy\Ticketit\Models\Comment();
+                    $comment = new \Juanrube\Ticketit\Models\Comment();
                     $comment->ticket_id = $ticket->id;
                     $comment->content = $faker->paragraphs(3, true);
                     $comment->html = nl2br($comment->content);

@@ -1,13 +1,13 @@
 <?php
 
-namespace Kordy\Ticketit\Controllers;
+namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use Kordy\Ticketit\Helpers\LaravelVersion;
-use Kordy\Ticketit\Models\Comment;
-use Kordy\Ticketit\Models\Setting;
-use Kordy\Ticketit\Models\Ticket;
+use Juanrube\Ticketit\Helpers\LaravelVersion;
+use Juanrube\Ticketit\Models\Comment;
+use Juanrube\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Models\Ticket;
 
 class NotificationsController extends Controller
 {
@@ -112,7 +112,7 @@ class NotificationsController extends Controller
                 Mail::send($template, $data, $mail_callback);
             }
         } elseif (LaravelVersion::min('5.4')) {
-            $mail = new \Kordy\Ticketit\Mail\TicketitNotification($template, $data, $notification_owner, $subject);
+            $mail = new \Juanrube\Ticketit\Mail\TicketitNotification($template, $data, $notification_owner, $subject);
 
             if (Setting::grab('queue_emails') == 'yes') {
                 Mail::to($to)->queue($mail);

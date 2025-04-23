@@ -1,12 +1,12 @@
 <?php
 
-namespace Kordy\Ticketit\Controllers;
+namespace Juanrube\Ticketit\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Kordy\Ticketit\Models\Category;
-use Kordy\Ticketit\Helpers\LaravelVersion;
+use Juanrube\Ticketit\Models\Category;
+use Juanrube\Ticketit\Helpers\LaravelVersion;
 
 class CategoriesController extends Controller
 {
@@ -57,7 +57,7 @@ class CategoriesController extends Controller
 
         \Cache::forget('ticketit::categories');
 
-        return redirect()->action('\Kordy\Ticketit\Controllers\CategoriesController@index');
+        return redirect()->action('\Juanrube\Ticketit\Controllers\CategoriesController@index');
     }
 
     /**
@@ -108,7 +108,7 @@ class CategoriesController extends Controller
 
         \Cache::forget('ticketit::categories');
 
-        return redirect()->action('\Kordy\Ticketit\Controllers\CategoriesController@index');
+        return redirect()->action('\Juanrube\Ticketit\Controllers\CategoriesController@index');
     }
 
     /**
@@ -128,6 +128,6 @@ class CategoriesController extends Controller
 
         \Cache::forget('ticketit::categories');
 
-        return redirect()->action('\Kordy\Ticketit\Controllers\CategoriesController@index');
+        return redirect()->action('\Juanrube\Ticketit\Controllers\CategoriesController@index');
     }
 }
