@@ -1,15 +1,15 @@
 <?php
 
-declare(strict_types=1);
+
 
 namespace Juanrube\Ticketit\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Juanrube\Ticketit\Models\Agent;
+use App\Http\Controllers\Controller;
+use Juanrube\Ticketit\Models\Setting;
 use Illuminate\Support\Facades\Session;
 use Juanrube\Ticketit\Helpers\LaravelVersion;
-use Juanrube\Ticketit\Models\Agent;
-use Juanrube\Ticketit\Models\Setting;
 
 class AgentsController extends Controller
 {
@@ -37,7 +37,7 @@ class AgentsController extends Controller
             $rules['agents.*'] = 'integer|exists:users,id';
         }
 
-        $this->validate($request, $rules);
+        $request->validate($request, $rules);
 
         $agents_list = $this->addAgents($request->input('agents'));
         $agents_names = implode(',', $agents_list);
@@ -84,11 +84,7 @@ class AgentsController extends Controller
         $agent->save();
 
         // Remove him from tickets categories as well
-        if (version_compare(app()->version(), '5.2.0', '>=')) {
-            $agent_cats = $agent->categories->pluck('id')->toArray();
-        } else { // if Laravel 5.1
-            $agent_cats = $agent->categories->lists('id')->toArray();
-        }
+        $agent_cats = $agent->categories->pluck('id')->toArray();
 
         $agent->categories()->detach($agent_cats);
 

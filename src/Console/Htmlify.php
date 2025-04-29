@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types=1);
+
 
 namespace Juanrube\Ticketit\Console;
 
 use Illuminate\Console\Command;
-use Juanrube\Ticketit\Models\Comment;
 use Juanrube\Ticketit\Models\Ticket;
+use Juanrube\Ticketit\Models\Comment;
 
 class Htmlify extends Command
 {

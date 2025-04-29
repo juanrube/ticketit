@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
+
 
 namespace Juanrube\Ticketit\Controllers;
 
-use App\Http\Controllers\Controller;
 use Juanrube\Ticketit\Models\Agent;
-use Juanrube\Ticketit\Models\Category;
+use App\Http\Controllers\Controller;
 use Juanrube\Ticketit\Models\Ticket;
+use Juanrube\Ticketit\Models\Category;
 
 class DashboardController extends Controller
 {
@@ -70,6 +70,7 @@ class DashboardController extends Controller
                 'categories_share',
                 'agents_share',
                 'active_tab'
-            ));
+            )
+        );
     }
 }

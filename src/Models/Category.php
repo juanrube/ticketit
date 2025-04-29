@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+
 
 namespace Juanrube\Ticketit\Models;
 
@@ -21,6 +21,6 @@ class Category extends Model
 
     public function agents()
     {
-        return $this->belongsToMany('\Juanrube\Ticketit\Models\Agent', 'ticketit_categories_users', 'category_id', 'user_id');
+        return $this->belongsToMany('Juanrube\Ticketit\Models\Agent', 'ticketit_categories_users', 'category_id', 'user_id');
     }
 }

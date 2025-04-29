@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+
 
 namespace Juanrube\Ticketit;
 
@@ -86,19 +86,16 @@ class TicketitServiceProvider extends ServiceProvider
                 return true;
             });
 
-            $this->loadTranslationsFrom(__DIR__.'/Translations', 'ticketit');
+            $this->loadTranslationsFrom(__DIR__ . '/Translations', 'ticketit');
 
-            $viewsDirectory = __DIR__.'/Views/bootstrap5';
+            $viewsDirectory = __DIR__ . '/Views/bootstrap5';
 
             $this->loadViewsFrom($viewsDirectory, 'ticketit');
 
             $this->publishes([$viewsDirectory => base_path('resources/views/vendor/ticketit')], 'views');
-            $this->publishes([__DIR__.'/Translations' => base_path('resources/lang/vendor/ticketit')], 'lang');
-            $this->publishes([__DIR__.'/Public' => public_path('vendor/ticketit')], 'public');
-            $this->publishes([__DIR__.'/Migrations' => base_path('database/migrations')], 'db');
-
-            // Check public assets are present, publish them if not
-            //            $installer->publicAssets();
+            $this->publishes([__DIR__ . '/Translations' => base_path('resources/lang/vendor/ticketit')], 'lang');
+            $this->publishes([__DIR__ . '/Public' => public_path('vendor/ticketit')], 'public');
+            $this->publishes([__DIR__ . '/Migrations' => base_path('database/migrations')], 'db');
 
             $main_route = Setting::grab('main_route');
             $main_route_path = Setting::grab('main_route_path');
@@ -108,16 +105,18 @@ class TicketitServiceProvider extends ServiceProvider
             if (file_exists(Setting::grab('routes'))) {
                 include Setting::grab('routes');
             } else {
-                include __DIR__.'/routes.php';
+                include __DIR__ . '/routes.php';
             }
-        } elseif (Request::path() == 'tickets-install'
-                || Request::path() == 'tickets-upgrade'
-                || Request::path() == 'tickets'
-                || Request::path() == 'tickets-admin'
-                || (isset($_SERVER['ARTISAN_TICKETIT_INSTALLING']) && $_SERVER['ARTISAN_TICKETIT_INSTALLING'])) {
-            $this->loadTranslationsFrom(__DIR__.'/Translations', 'ticketit');
-            $this->loadViewsFrom(__DIR__.'/Views/bootstrap5', 'ticketit');
-            $this->publishes([__DIR__.'/Migrations' => base_path('database/migrations')], 'db');
+        } elseif (
+            Request::path() == 'tickets-install'
+            || Request::path() == 'tickets-upgrade'
+            || Request::path() == 'tickets'
+            || Request::path() == 'tickets-admin'
+            || (isset($_SERVER['ARTISAN_TICKETIT_INSTALLING']) && $_SERVER['ARTISAN_TICKETIT_INSTALLING'])
+        ) {
+            $this->loadTranslationsFrom(__DIR__ . '/Translations', 'ticketit');
+            $this->loadViewsFrom(__DIR__ . '/Views/bootstrap5', 'ticketit');
+            $this->publishes([__DIR__ . '/Migrations' => base_path('database/migrations')], 'db');
 
             $authMiddleware = Helpers\LaravelVersion::authMiddleware();
 
@@ -160,9 +159,9 @@ class TicketitServiceProvider extends ServiceProvider
          * Register htmlify command. Need to run this when upgrading from <=0.2.2
          */
 
-        $this->app->singleton('command.kordy.ticketit.htmlify', function ($app) {
+        $this->app->singleton('command.juanrube.ticketit.htmlify', function ($app) {
             return new Htmlify;
         });
-        $this->commands('command.kordy.ticketit.htmlify');
+        $this->commands('command.juanrube.ticketit.htmlify');
     }
 }

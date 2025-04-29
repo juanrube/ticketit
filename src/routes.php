@@ -1,6 +1,8 @@
 <?php
 
-declare(strict_types=1);
+use Illuminate\Support\Facades\Route;
+
+
 
 Route::group(['middleware' => \Juanrube\Ticketit\Helpers\LaravelVersion::authMiddleware()], function () use ($main_route, $main_route_path, $admin_route, $admin_route_path) {
     // Ticket public route
@@ -12,13 +14,13 @@ Route::group(['middleware' => \Juanrube\Ticketit\Helpers\LaravelVersion::authMid
     $field_name = last(explode('/', $main_route_path));
     Route::resource($main_route_path, 'Juanrube\Ticketit\Controllers\TicketsController', [
         'names' => [
-            'index' => $main_route.'.index',
-            'store' => $main_route.'.store',
-            'create' => $main_route.'.create',
-            'update' => $main_route.'.update',
-            'show' => $main_route.'.show',
-            'destroy' => $main_route.'.destroy',
-            'edit' => $main_route.'.edit',
+            'index' => $main_route . '.index',
+            'store' => $main_route . '.store',
+            'create' => $main_route . '.create',
+            'update' => $main_route . '.update',
+            'show' => $main_route . '.show',
+            'destroy' => $main_route . '.destroy',
+            'edit' => $main_route . '.edit',
         ],
         'parameters' => [
             $field_name => 'ticket',
@@ -49,13 +51,11 @@ Route::group(['middleware' => \Juanrube\Ticketit\Helpers\LaravelVersion::authMid
     // Ticket reopen route for permitted user.
     Route::get("$main_route_path/{id}/reopen", 'Juanrube\Ticketit\Controllers\TicketsController@reopen')
         ->name("$main_route.reopen");
-    // });
 
     Route::group(['middleware' => 'Juanrube\Ticketit\Middleware\IsAgentMiddleware'], function () use ($main_route, $main_route_path) {
-
         // API return list of agents in particular category
         Route::get("$main_route_path/agents/list/{category_id?}/{ticket_id?}", [
-            'as' => $main_route.'agentselectlist',
+            'as' => $main_route . 'agentselectlist',
             'uses' => 'Juanrube\Ticketit\Controllers\TicketsController@agentSelectList',
         ]);
     });
@@ -63,7 +63,7 @@ Route::group(['middleware' => \Juanrube\Ticketit\Helpers\LaravelVersion::authMid
     Route::group(['middleware' => 'Juanrube\Ticketit\Middleware\IsAdminMiddleware'], function () use ($admin_route, $admin_route_path) {
         // Ticket admin index route (ex. http://url/tickets-admin/)
         Route::get("$admin_route_path/indicator/{indicator_period?}", [
-            'as' => $admin_route.'.dashboard.indicator',
+            'as' => $admin_route . '.dashboard.indicator',
             'uses' => 'Juanrube\Ticketit\Controllers\DashboardController@index',
         ]);
         Route::get($admin_route_path, 'Juanrube\Ticketit\Controllers\DashboardController@index');
@@ -145,6 +145,5 @@ Route::group(['middleware' => \Juanrube\Ticketit\Helpers\LaravelVersion::authMid
                 'edit' => "$admin_route.administrator.edit",
             ],
         ]);
-
     });
 });

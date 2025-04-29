@@ -7,7 +7,7 @@
         "laravel/framework": ">=10.0 <12.9.9",
         "spatie/laravel-html": "^3.0",
         "illuminate/support": ">=10.0 <12.9.9",
-        "yajra/laravel-datatables-oracle":"^12.0",
+        "yajra/laravel-datatables":"^12.0",
         "mews/purifier": "^3.4.3"
 
     },
@@ -32,7 +32,8 @@
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
-            "php artisan vendor:publish --tag=public --force"
+            "php artisan vendor:publish --tag=public --force",
+            "php artisan vendor:publish --provider=\"Yajra\\DataTables\\DataTablesServiceProvider\" --tag=datatables"
         ]
     },
     "extra": {

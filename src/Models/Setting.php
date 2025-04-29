@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+
 
 namespace Juanrube\Ticketit\Models;
 
@@ -28,9 +28,6 @@ class Setting extends Model
          * of Database queries. Only for adding new settings while
          * in development and testing.
          */
-        //       Cache::flush();
-
-        // seconds expected for L5.8<=, minutes before that
         $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
 
         $setting = Cache::remember('ticketit::settings.'.$slug, $time, function () use ($slug, $time) {
