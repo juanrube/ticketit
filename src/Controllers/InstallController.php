@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
 use App\Models\User;

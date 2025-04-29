@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
 use Illuminate\Support\Facades\Cache;
@@ -51,7 +49,7 @@ class ConfigurationsController extends Controller
                 $configurations_by_sections['other'][] = $config_item;
             }
         }
-
+        
         return view('ticketit::admin.configuration.index', compact('configurations', 'configurations_by_sections'));
     }
 
@@ -62,7 +60,7 @@ class ConfigurationsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'slug' => 'required',
             'default' => 'required',
             'value' => 'required',
@@ -99,7 +97,7 @@ class ConfigurationsController extends Controller
             if (! Auth::attempt($request->only('password'), false, false)) {
                 return back()->withErrors([trans('ticketit::admin.config-edit-auth-failed')]);
             }
-            if (eval('$value = serialize('.$value.');') === false) {
+            if (serialize($value) === false) {
                 return back()->withErrors([trans('ticketit::admin.config-edit-eval-error')]);
             }
         }

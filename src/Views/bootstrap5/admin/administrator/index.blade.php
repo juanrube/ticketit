@@ -4,6 +4,7 @@
 
 @section('ticketit_header')
 <a href="{{ route($setting->grab('admin_route').'.administrator.create') }}" class="btn btn-primary">
+    <i class="fas fa-plus-circle mr-2"></i>
     {{ trans('ticketit::admin.btn-create-new-administrator') }}
 </a>
 @stop

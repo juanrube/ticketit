@@ -6,9 +6,9 @@ namespace Juanrube\Ticketit\Helpers;
 
 class Cdn
 {
-    const CodeMirror = '5.48.4';
+    const CodeMirror = '6.65.7';
 
-    const Summernote = '0.8.12';
+    const Summernote = '0.9.1';
 
     const FontAwesome = '4.7.0';
 

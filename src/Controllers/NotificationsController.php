@@ -1,15 +1,14 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use Juanrube\Ticketit\Helpers\LaravelVersion;
+use Juanrube\Ticketit\Models\Ticket;
 use Juanrube\Ticketit\Models\Comment;
 use Juanrube\Ticketit\Models\Setting;
-use Juanrube\Ticketit\Models\Ticket;
+use Juanrube\Ticketit\Helpers\LaravelVersion;
 
 class NotificationsController extends Controller
 {
@@ -89,28 +88,20 @@ class NotificationsController extends Controller
             $to = $ticket->agent;
         }
 
-        if (LaravelVersion::lt('5.4')) {
-            $mail_callback = function ($m) use ($to, $notification_owner, $subject) {
-                $m->to($to->email, $to->name);
-
-                $m->replyTo($notification_owner->email, $notification_owner->name);
-
-                $m->subject($subject);
-            };
+        $mail = new \Juanrube\Ticketit\Mail\TicketitNotification($template, $data, $notification_owner, $subject);
 
             if (Setting::grab('queue_emails') == 'yes') {
-                Mail::queue($template, $data, $mail_callback);
+                try {
+                    Mail::to($to)->queue($mail);
+                } catch (\Throwable $th) {
+                    Log::debug("ERROR ENVIANDO EMAIL DE NOTIFACION TICKETIT NotificationController@sendNotification - L:99", [$th->getMessage()]);
+                }
             } else {
-                Mail::send($template, $data, $mail_callback);
+                try {
+                    Mail::to($to)->send($mail);
+                } catch (\Throwable $th) {
+                    Log::debug("ERROR ENVIANDO EMAIL DE NOTIFACION TICKETIT NotificationController@sendNotification - L:105", [$th->getMessage()]);
+                }
             }
-        } elseif (LaravelVersion::min('5.4')) {
-            $mail = new \Juanrube\Ticketit\Mail\TicketitNotification($template, $data, $notification_owner, $subject);
-
-            if (Setting::grab('queue_emails') == 'yes') {
-                Mail::to($to)->queue($mail);
-            } else {
-                Mail::to($to)->send($mail);
-            }
-        }
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +27,7 @@ class CommentsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'ticket_id' => 'required|exists:ticketit,id',
             'content' => 'required|min:6',
         ]);

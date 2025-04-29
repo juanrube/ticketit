@@ -5,6 +5,7 @@
 
 @section('ticketit_header')
 <a href="{{ route($setting->grab('main_route').'.create') }}" class="btn btn-primary">
+    <i class="fas fa-plus-circle mr-2"></i>
     {{ trans('ticketit::lang.btn-create-new-ticket') }}
 </a>
 @stop
@@ -17,6 +18,7 @@
 @stop
 
 @section('footer')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.2.2/b-3.2.2/b-colvis-3.2.2/b-html5-3.2.2/b-print-3.2.2/date-1.5.5/r-3.0.4/sp-2.3.3/datatables.min.js" integrity="sha384-bIoLRxA/CDmfyxexpAccKiI/s6gC3Cs2X36IFBdlofgHK6xdXHQMZ3XhPFTTnV4V" crossorigin="anonymous"></script>
 <script>
     $('.table').DataTable({

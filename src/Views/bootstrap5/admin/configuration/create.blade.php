@@ -2,57 +2,55 @@
 @section('page', trans('ticketit::admin.config-create-subtitle'))
 
 @section('ticketit_header')
-{!! link_to_route(
-    $setting->grab('admin_route').'.configuration.index',
-    trans('ticketit::admin.btn-back'), null,
-    ['class' => 'btn btn-secondary'])
-!!}
+<a href="{{ route($setting->grab('admin_route').'.configuration.index') }}" class="btn btn-secondary">
+    <i class="fas fa-arrow-left mr-2"></i>
+    {{ trans('ticketit::admin.btn-back') }}
+</a>
 @stop
 
 @section('ticketit_content')
-    {!! CollectiveForm::open(['route' => $setting->grab('admin_route').'.configuration.store']) !!}
+    {!! Html::form()->action(route($setting->grab('admin_route').'.configuration.store'))->open() !!}
 
         <!-- Slug Field -->
-        <div class="form-group row">
-            {!! CollectiveForm::label('slug', trans('ticketit::admin.config-edit-slug') . trans('ticketit::admin.colon'), ['class' => 'col-sm-3 col-form-label']) !!}
-            <div class="col-sm-9">
-                {!! CollectiveForm::text('slug', null, ['class' => 'form-control']) !!}
+        <div class="form-group row mt-3">
+            {!! Html::label('slug', trans('ticketit::admin.config-edit-slug') . trans('ticketit::admin.colon'))->class('col-sm-2 col-form-label') !!}
+            <div class="col-sm-10">
+                {!! Html::text('slug')->class('form-control') !!}
             </div>
         </div>
 
         <!-- Default Field -->
-        <div class="form-group row">
-            {!! CollectiveForm::label('default', trans('ticketit::admin.config-edit-default') . trans('ticketit::admin.colon'), ['class' => 'col-sm-3 col-form-label']) !!}
-            <div class="col-sm-9">
-                {!! CollectiveForm::text('default', null, ['class' => 'form-control']) !!}
+        <div class="form-group row mt-3">
+            {!! Html::label('default', trans('ticketit::admin.config-edit-default') . trans('ticketit::admin.colon'))->class('col-sm-2 col-form-label') !!}
+            <div class="col-sm-10">
+                {!! Html::text('default')->class('form-control') !!}
             </div>
         </div>
 
         <!-- Value Field -->
-        <div class="form-group row">
-            {!! CollectiveForm::label('value', trans('ticketit::admin.config-edit-value') . trans('ticketit::admin.colon'), ['class' => 'col-sm-3 col-form-label']) !!}
-            <div class="col-sm-9">
-                {!! CollectiveForm::text('value', null, ['class' => 'form-control']) !!}
+        <div class="form-group row mt-3">
+            {!! Html::label('value', trans('ticketit::admin.config-edit-value') . trans('ticketit::admin.colon'))->class('col-sm-2 col-form-label') !!}
+            <div class="col-sm-10">
+                {!! Html::text('value')->class('form-control') !!}
             </div>
         </div>
 
         <!-- Lang Field -->
-        <div class="form-group row">
-            {!! CollectiveForm::label('lang', trans('ticketit::admin.config-edit-language') . trans('ticketit::admin.colon'), ['class' => 'col-sm-3 col-form-label']) !!}
-            <div class="col-sm-9">
-                {!! CollectiveForm::text('lang', null, ['class' => 'form-control']) !!}
-                
+        <div class="form-group row mt-3">
+            {!! Html::label('lang', trans('ticketit::admin.config-edit-language') . trans('ticketit::admin.colon'))->class('col-sm-2 col-form-label') !!}
+            <div class="col-sm-10">
+                {!! Html::text('lang')->class('form-control') !!}
             </div>
         </div>
 
         <!-- Submit Field -->
-        <div class="form-group row">
-            <div class="col-sm-10 offset-sm-3">
-              {!! CollectiveForm::submit(trans('ticketit::admin.btn-submit'), ['class' => 'btn btn-primary']) !!}
+        <div class="form-group row mt-5">
+            <div class="d-grid gap-2 col-4 mx-auto">
+                {!! Html::submit(trans('ticketit::admin.btn-submit'))->class('btn btn-primary btn-block') !!}
             </div>
         </div>
 
-    {!! CollectiveForm::close() !!}
+    {!! Html::form()->close() !!}
 @stop
 
 @section('footer')

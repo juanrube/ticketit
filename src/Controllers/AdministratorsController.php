@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
 use Illuminate\Http\Request;

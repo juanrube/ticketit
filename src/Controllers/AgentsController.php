@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,7 +7,6 @@ use Juanrube\Ticketit\Models\Agent;
 use App\Http\Controllers\Controller;
 use Juanrube\Ticketit\Models\Setting;
 use Illuminate\Support\Facades\Session;
-use Juanrube\Ticketit\Helpers\LaravelVersion;
 
 class AgentsController extends Controller
 {
@@ -31,13 +28,11 @@ class AgentsController extends Controller
     {
         $rules = [
             'agents' => 'required|array|min:1',
+            'agents.*' => 'integer|exists:users,id',
         ];
 
-        if (LaravelVersion::min('5.2')) {
-            $rules['agents.*'] = 'integer|exists:users,id';
-        }
 
-        $request->validate($request, $rules);
+        $request->validate($rules);
 
         $agents_list = $this->addAgents($request->input('agents'));
         $agents_names = implode(',', $agents_list);

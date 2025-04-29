@@ -1,19 +1,17 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
-use Juanrube\Ticketit\Helpers\LaravelVersion;
 use Juanrube\Ticketit\Models;
+use Illuminate\Support\Carbon;
 use Juanrube\Ticketit\Models\Agent;
-use Juanrube\Ticketit\Models\Category;
-use Juanrube\Ticketit\Models\Setting;
+use App\Http\Controllers\Controller;
 use Juanrube\Ticketit\Models\Ticket;
+use Illuminate\Support\Facades\Cache;
+use Juanrube\Ticketit\Models\Setting;
+use Juanrube\Ticketit\Models\Category;
+use Juanrube\Ticketit\Helpers\LaravelVersion;
 
 class TicketsController extends Controller
 {
@@ -83,11 +81,7 @@ class TicketsController extends Controller
 
         $collection->editColumn('updated_at', '{!! \Illuminate\Support\Carbon::parse($updated_at)->diffForHumans() !!}');
 
-        // method rawColumns was introduced in laravel-datatables 7, which is only compatible with >L5.4
-        // in previous laravel-datatables versions escaping columns wasn't defaut
-        if (LaravelVersion::min('5.4')) {
-            $collection->rawColumns(['subject', 'status', 'priority', 'category', 'agent']);
-        }
+        $collection->rawColumns(['subject', 'status', 'priority', 'category', 'agent']);
 
         return $collection->make(true);
     }
@@ -95,11 +89,7 @@ class TicketsController extends Controller
     public function renderTicketTable($collection)
     {
         $collection->editColumn('subject', function ($ticket) {
-            return (string) link_to_route(
-                Setting::grab('main_route').'.show',
-                $ticket->subject,
-                $ticket->id
-            );
+            return '<a href="' . route(Setting::grab('main_route') . '.show', $ticket->id) . '">' . e($ticket->subject) . '</a>';
         });
 
         $collection->editColumn('status', function ($ticket) {
@@ -149,7 +139,7 @@ class TicketsController extends Controller
     protected function PCS()
     {
         // seconds expected for L5.8<=, minutes before that
-        $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
+        $time = 60 * 60;
 
         $priorities = Cache::remember('ticketit::priorities', $time, function () {
             return Models\Priority::all();
@@ -163,11 +153,7 @@ class TicketsController extends Controller
             return Models\Status::all();
         });
 
-        if (LaravelVersion::min('5.3.0')) {
-            return [$priorities->pluck('name', 'id'), $categories->pluck('name', 'id'), $statuses->pluck('name', 'id')];
-        } else {
-            return [$priorities->lists('name', 'id'), $categories->lists('name', 'id'), $statuses->lists('name', 'id')];
-        }
+        return [$priorities->pluck('name', 'id'), $categories->pluck('name', 'id'), $statuses->pluck('name', 'id')];
     }
 
     public function create()
@@ -179,7 +165,7 @@ class TicketsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'subject' => 'required|min:3',
             'content' => 'required|min:6',
             'priority_id' => 'required|exists:ticketit_priorities,id',
@@ -203,7 +189,7 @@ class TicketsController extends Controller
 
         session()->flash('status', trans('ticketit::lang.the-ticket-has-been-created'));
 
-        return redirect()->route(Setting::grab('main_route').'.index');
+        return redirect()->route(Setting::grab('main_route') . '.index');
     }
 
     public function show($id)
@@ -224,14 +210,24 @@ class TicketsController extends Controller
 
         $comments = $ticket->comments()->paginate(Setting::grab('paginate_items'));
 
-        return view('ticketit::tickets.show',
-            compact('ticket', 'status_lists', 'priority_lists', 'category_lists', 'agent_lists', 'comments',
-                'close_perm', 'reopen_perm'));
+        return view(
+            'ticketit::tickets.show',
+            compact(
+                'ticket',
+                'status_lists',
+                'priority_lists',
+                'category_lists',
+                'agent_lists',
+                'comments',
+                'close_perm',
+                'reopen_perm'
+            )
+        );
     }
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $request->validate([
             'subject' => 'required|min:3',
             'content' => 'required|min:6',
             'priority_id' => 'required|exists:ticketit_priorities,id',
@@ -260,7 +256,7 @@ class TicketsController extends Controller
 
         session()->flash('status', trans('ticketit::lang.the-ticket-has-been-modified'));
 
-        return redirect()->route(Setting::grab('main_route').'.show', $id);
+        return redirect()->route(Setting::grab('main_route') . '.show', $id);
     }
 
     public function destroy($id)
@@ -271,7 +267,7 @@ class TicketsController extends Controller
 
         session()->flash('status', trans('ticketit::lang.the-ticket-has-been-deleted', ['name' => $subject]));
 
-        return redirect()->route(Setting::grab('main_route').'.index');
+        return redirect()->route(Setting::grab('main_route') . '.index');
     }
 
     public function complete($id)
@@ -289,10 +285,10 @@ class TicketsController extends Controller
 
             session()->flash('status', trans('ticketit::lang.the-ticket-has-been-completed', ['name' => $subject]));
 
-            return redirect()->route(Setting::grab('main_route').'.index');
+            return redirect()->route(Setting::grab('main_route') . '.index');
         }
 
-        return redirect()->route(Setting::grab('main_route').'.index')
+        return redirect()->route(Setting::grab('main_route') . '.index')
             ->with('warning', trans('ticketit::lang.you-are-not-permitted-to-do-this'));
     }
 
@@ -311,10 +307,10 @@ class TicketsController extends Controller
 
             session()->flash('status', trans('ticketit::lang.the-ticket-has-been-reopened', ['name' => $subject]));
 
-            return redirect()->route(Setting::grab('main_route').'.index');
+            return redirect()->route(Setting::grab('main_route') . '.index');
         }
 
-        return redirect()->route(Setting::grab('main_route').'.index')
+        return redirect()->route(Setting::grab('main_route') . '.index')
             ->with('warning', trans('ticketit::lang.you-are-not-permitted-to-do-this'));
     }
 
@@ -331,7 +327,7 @@ class TicketsController extends Controller
         $select = '<select class="form-control" id="agent_id" name="agent_id">';
         foreach ($agents as $id => $name) {
             $selected = ($id == $selected_Agent) ? 'selected' : '';
-            $select .= '<option value="'.$id.'" '.$selected.'>'.$name.'</option>';
+            $select .= '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
         }
         $select .= '</select>';
 

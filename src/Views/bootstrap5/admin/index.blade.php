@@ -5,41 +5,49 @@
 @section('ticketit_extra_content')
     @if($tickets_count)
         <div class="card-deck mb-3">
-            <div class="card bg-light">
-                <div class="card-body row d-flex align-items-center">
-                    <div class="col-3" style="font-size: 5em;">
-                        <i class="fas fa-th"></i>
-                    </div>
-                    <div class="col-9 text-right">
-                        <h1>{{ $tickets_count }}</h1>
-                        <div>{{ trans('ticketit::admin.index-total-tickets') }}</div>
+            <div class="row text-center">
+                <div class="col-4 col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body row d-flex align-items-center">
+                            <div class="col-3" style="font-size: 5em;">
+                                <i class="fas fa-th"></i>
+                            </div>
+                            <div class="col-9 text-right">
+                                <h1>{{ $tickets_count }}</h1>
+                                <div>{{ trans('ticketit::admin.index-total-tickets') }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="card bg-danger">
-                <div class="card-body row d-flex align-items-center">
-                    <div class="col-3" style="font-size: 5em;">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    <div class="col-9 text-right">
-                        <h1>{{ $open_tickets_count }}</h1>
-                        <div>{{ trans('ticketit::admin.index-open-tickets') }}</div>
+                <div class="col-4 col-md-4">
+                    <div class="card bg-danger">
+                        <div class="card-body row d-flex align-items-center">
+                            <div class="col-3" style="font-size: 5em;">
+                                <i class="fas fa-wrench"></i>
+                            </div>
+                            <div class="col-9 text-right">
+                                <h1>{{ $open_tickets_count }}</h1>
+                                <div>{{ trans('ticketit::admin.index-open-tickets') }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="card bg-success">
-                <div class="card-body row d-flex align-items-center">
-                    <div class="col-3" style="font-size: 5em;">
-                        <i class="fas fa-thumbs-up"></i>
-                    </div>
-                    <div class="col-9 text-right">
-                        <h1>{{ $closed_tickets_count }}</h1>
-                        <span>{{ trans('ticketit::admin.index-closed-tickets') }}</span>
+                <div class="col-4 col-md-4">
+                    <div class="card bg-success">
+                        <div class="card-body row d-flex align-items-center">
+                            <div class="col-3" style="font-size: 5em;">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <div class="col-9 text-right">
+                                <h1>{{ $closed_tickets_count }}</h1>
+                                <span>{{ trans('ticketit::admin.index-closed-tickets') }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
 
         <div class="row mb-3">

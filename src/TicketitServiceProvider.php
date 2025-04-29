@@ -92,10 +92,15 @@ class TicketitServiceProvider extends ServiceProvider
 
             $this->loadViewsFrom($viewsDirectory, 'ticketit');
 
-            $this->publishes([$viewsDirectory => base_path('resources/views/vendor/ticketit')], 'views');
-            $this->publishes([__DIR__ . '/Translations' => base_path('resources/lang/vendor/ticketit')], 'lang');
-            $this->publishes([__DIR__ . '/Public' => public_path('vendor/ticketit')], 'public');
-            $this->publishes([__DIR__ . '/Migrations' => base_path('database/migrations')], 'db');
+            // Publicar configuraciones y assets de yajra/laravel-datatables
+            $this->publishes([
+                base_path('vendor/yajra/laravel-datatables-oracle/config/datatables.php') => config_path('datatables.php'),
+            ], 'datatables');
+
+            $this->publishes([$viewsDirectory => base_path('resources/views/vendor/ticketit')], 'ticketit:views');
+            $this->publishes([__DIR__ . '/Translations' => base_path('resources/lang/vendor/ticketit')], 'ticketit:lang');
+            $this->publishes([__DIR__ . '/Public' => public_path('vendor/ticketit')], 'ticketit:public');
+            $this->publishes([__DIR__ . '/Migrations' => base_path('database/migrations')], 'ticketit:db');
 
             $main_route = Setting::grab('main_route');
             $main_route_path = Setting::grab('main_route_path');
@@ -151,7 +156,7 @@ class TicketitServiceProvider extends ServiceProvider
          */
         $this->app->register(\Spatie\Html\HtmlServiceProvider::class); // Reemplazamos Collective por Spatie
 
-        $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
+        $this->app->register(\Yajra\DataTables\DataTablesServiceProvider::class);
 
         $this->app->register(\Mews\Purifier\PurifierServiceProvider::class);
 

@@ -24,7 +24,7 @@
                 <td class="text-center">{!! $configuration->lang !!}</td>
                 <td class="text-center">
                     <a href="{{ route($setting->grab('admin_route').'.configuration.edit', [$configuration->id]) }}" 
-                       class="btn btn-info" 
+                       class="btn btn-warning" 
                        title="{{ trans('ticketit::admin.table-edit').' '.$configuration->slug }}" 
                        data-toggle="tooltip">
                         {{ trans('ticketit::admin.btn-edit') }}

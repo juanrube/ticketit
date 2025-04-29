@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace Juanrube\Ticketit\Controllers;
 
 use Illuminate\Support\Facades\Cache;
@@ -17,7 +15,7 @@ class PrioritiesController extends Controller
     public function index()
     {
         // seconds expected for L5.8<=, minutes before that
-        $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
+        $time = 60 * 60;
         $priorities = Cache::remember('ticketit::priorities', $time, function () {
             return Priority::all();
         });
@@ -32,7 +30,7 @@ class PrioritiesController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required',
             'color' => 'required',
         ]);
@@ -61,7 +59,7 @@ class PrioritiesController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required',
             'color' => 'required',
         ]);

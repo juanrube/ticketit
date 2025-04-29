@@ -28,7 +28,7 @@ class Setting extends Model
          * of Database queries. Only for adding new settings while
          * in development and testing.
          */
-        $time = LaravelVersion::min('5.8') ? 60 * 60 : 60;
+        $time = 60 * 60;
 
         $setting = Cache::remember('ticketit::settings.'.$slug, $time, function () use ($slug, $time) {
             $settings = Cache::remember('ticketit::settings', $time, function () {

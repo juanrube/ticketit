@@ -4,7 +4,9 @@
             {!! Html::form()->action(route($setting->grab('main_route') . '.update', $ticket->id))->method('PATCH')->class('form-horizontal')->open() !!}
             <div class="modal-header">
                 <h5 class="modal-title" id="ticket-edit-modal-Label">{{ $ticket->subject }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{{ trans('ticketit::lang.flash-x') }}</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">{{ trans('ticketit::lang.flash-x') }}</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">

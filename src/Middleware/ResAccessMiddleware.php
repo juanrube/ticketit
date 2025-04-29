@@ -27,11 +27,7 @@ class ResAccessMiddleware
 
         // if this is a ticket show page
         if ($request->route()->getName() == Setting::grab('main_route').'.show') {
-            if (LaravelVersion::lt('5.2.0')) {
-                $ticket_id = $request->route(Setting::grab('main_route'));
-            } else {
-                $ticket_id = $request->route('ticket');
-            }
+            $ticket_id = $request->route(Setting::grab('main_route'));
         }
 
         // if this is a new comment on a ticket
